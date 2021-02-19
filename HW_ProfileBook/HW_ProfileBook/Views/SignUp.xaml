@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="HW_ProfileBook.Views.SignUp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout
+            Grid.Row="0"
+            Margin="25"
+            VerticalOptions="Center">
+
+            <Entry Placeholder="Login" Text="{Binding UserLogin}" />
+
+            <Entry
+                IsPassword="True"
+                Placeholder="Password"
+                Text="{Binding UserPassword}" />
+
+            <Entry
+                IsPassword="True"
+                Placeholder="Confirm password"
+                Text="{Binding ConfirmUserPassword}" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="1" VerticalOptions="Center">
+
+            <Button
+                Margin="25"
+                BackgroundColor="DarkOrange"
+                Command="{Binding NavigateToSignInView}"
+                CornerRadius="10"
+                IsEnabled="{Binding IsEnabled}"
+                Text="Sign up" />
+        </StackLayout>
+    </Grid>
+</ContentPage>

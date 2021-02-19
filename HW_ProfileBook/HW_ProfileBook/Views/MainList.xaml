@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="HW_ProfileBook.Views.MainList"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding LogOut}" IconImageSource="ic_exit_to_app.png" />
+
+        <ToolbarItem IconImageSource="ic_settings.png" />
+
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ScrollView Grid.Row="0">
+            <StackLayout>
+                <ListView
+                    x:Name="ListProfiles"
+                    ItemsSource="{Binding Profiles}"
+                    RowHeight="70"
+                    SelectedItem="{Binding SelectProfiles}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem
+                                        Command="{Binding BindingContext.EditProfile, Source={x:Reference ListProfiles}}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Edit" />
+                                    <MenuItem
+                                        Command="{Binding BindingContext.DeleteProfile, Source={x:Reference ListProfiles}}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Delete" />
+                                </ViewCell.ContextActions>
+                                <StackLayout Orientation="Horizontal">
+                                    <Image Source="{Binding ProfileImage}" />
+                                    <StackLayout>
+                                        <Label Text="{Binding NickNameLabel}" />
+                                        <Label Text="{Binding NameLabel}" />
+                                        <Label Text="{Binding DateLabel}" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+
+        <Button
+            Margin="0,0,20,22"
+            BackgroundColor="DodgerBlue"
+            BorderColor="Black"
+            BorderWidth="4"
+            Command="{Binding NavigateToAddEditProfile}"
+            CornerRadius="35"
+            FontSize="Title"
+            HeightRequest="70"
+            HorizontalOptions="End"
+            Text="+"
+            TextColor="White"
+            VerticalOptions="End"
+            WidthRequest="70" />
+
+    </Grid>
+</ContentPage>
