@@ -35,8 +35,8 @@
                 Margin="25"
                 BackgroundColor="DarkOrange"
                 Command="{Binding NavigateToSignInView}"
+                CommandParameter="{Binding UserLogin}"
                 CornerRadius="10"
-                IsEnabled="{Binding IsEnabled}"
                 Text="Sign up" />
         </StackLayout>
     </Grid>

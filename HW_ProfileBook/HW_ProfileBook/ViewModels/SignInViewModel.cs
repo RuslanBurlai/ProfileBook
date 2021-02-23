@@ -4,6 +4,8 @@ using System;
 using HW_ProfileBook.Services.Validators;
 using HW_ProfileBook.Services.Autorization;
 using Prism.Services;
+using HW_ProfileBook.Views;
+using Xamarin.Forms;
 
 namespace HW_ProfileBook.ViewModels
 {
@@ -44,13 +46,6 @@ namespace HW_ProfileBook.ViewModels
             set { SetProperty(ref _userPassword, value); }
         }
 
-        private bool _isEnabled;
-        public bool IsEnabled
-        {
-            get { return _isEnabled; }
-            set { SetProperty(ref _isEnabled, value); }
-        }
-
         public DelegateCommand _navigateToMainList;
         public DelegateCommand NavigateToMainList =>
             _navigateToMainList ?? (_navigateToMainList = new DelegateCommand(ExecuteNavigateToMainList, CanExecuteNavigateToMainListCommand)
@@ -65,11 +60,11 @@ namespace HW_ProfileBook.ViewModels
         private void ExecuteNavigateToMainList()
         {
             if (_autorithation.CheckLoginPassword(_userLogin, _userPassword))
-                NavigationService.NavigateAsync("/NavigationPage/MainList");
+                NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainList)}");
             else
             {
                 _dialogService.DisplayAlertAsync("Error", "Invalid login or password!", "OK");
-                CheckEntry.ResetEntry(UserPassword);
+                UserPassword = CheckEntry.ResetEntry();
             }
         }
 
@@ -79,7 +74,17 @@ namespace HW_ProfileBook.ViewModels
 
         void ExecuteNavigateToSingUpView()
         {
-            NavigationService.NavigateAsync("SignUp");
+            NavigationService.NavigateAsync($"{nameof(SignUp)}");
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            UserLogin = parameters.GetValue<string>("loginFromSignUpView");
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            UserPassword = CheckEntry.ResetEntry();
         }
     }
 }

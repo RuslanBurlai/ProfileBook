@@ -1,9 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="HW_ProfileBook.Views.AddEditProfile"
-             Title="{Binding Title}">
-  
+<ContentPage
+    x:Class="HW_ProfileBook.Views.AddEditProfile"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding SaveProfile}"
+            IconImageSource="ic_save.png"
+            Order="Primary" />
+    </ContentPage.ToolbarItems>
+
+    <Grid Margin="35,10,35,35">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height=".5*" />
+            <RowDefinition Height=".5*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Source="pic_profile.png" />
+
+        <Entry
+            Grid.Row="1"
+            Placeholder="Nick name"
+            Text="{Binding NickName}"
+            VerticalOptions="End" />
+        <Entry
+            Grid.Row="2"
+            Placeholder="Name"
+            Text="{Binding Name}"
+            VerticalOptions="Center" />
+
+
+        <Editor
+            Grid.Row="3"
+            BackgroundColor="LightGray"
+            Text="{Binding Description}" />
+    </Grid>
 </ContentPage>

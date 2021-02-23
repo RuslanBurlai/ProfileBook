@@ -1,8 +1,10 @@
 ﻿using HW_ProfileBook.Model;
+using HW_ProfileBook.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace HW_ProfileBook.ViewModels
 {
@@ -42,7 +44,7 @@ namespace HW_ProfileBook.ViewModels
         }
         void ExecuteLogOut()
         {
-            NavigationService.NavigateAsync("SignIn");
+            NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
         }
         private void ExecuteEditProfile(object parameter)
         {

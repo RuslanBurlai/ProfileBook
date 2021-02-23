@@ -17,12 +17,9 @@ namespace HW_ProfileBook.Services.Validators
             return count == entryInput.Length;
         }
 
-        public static void ResetEntry(params string[] entryInput)
+        public static string ResetEntry()
         {
-            for (int i = 0; i < entryInput.Length; i++)
-            {
-                entryInput[i] = string.Empty;
-            }
+            return string.Empty;
         }
     }
 }

@@ -35,7 +35,7 @@
                 Command="{Binding NavigateToMainList}"
                 CornerRadius="10"
                 Text="Sign in" 
-                IsEnabled="{Binding IsEnabled}"/>
+                />
 
             <Label HorizontalOptions="Center">
 

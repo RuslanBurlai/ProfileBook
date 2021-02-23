@@ -2,6 +2,8 @@
 using Prism.Navigation;
 using HW_ProfileBook.Services.Validators;
 using System;
+using HW_ProfileBook.Views;
+using Prism.Services;
 
 namespace HW_ProfileBook.ViewModels
 {
@@ -9,15 +11,18 @@ namespace HW_ProfileBook.ViewModels
     {
         private ILoginValidators _loginValidators;
         private IPasswordValidators _passwordValidators;
+        private IPageDialogService _pageDialogService;
         public SignUpViewModel(
             INavigationService navigationService,
             ILoginValidators loginValidators,
-            IPasswordValidators passwordValidators)
+            IPasswordValidators passwordValidators,
+            IPageDialogService pageDialogService)
             : base(navigationService)
         {
             Title = "Users SignUp";
             _loginValidators = loginValidators;
             _passwordValidators = passwordValidators;
+            _pageDialogService = pageDialogService;
         }
 
         private string _userLogin;
@@ -41,29 +46,37 @@ namespace HW_ProfileBook.ViewModels
             set { SetProperty(ref _confirmUserPassword, value); }
         }
 
-        private bool _isEnabled;
-        public bool IsEnabled
-        {
-            get { return _isEnabled; }
-            set { SetProperty(ref _isEnabled, value); }
-        }
-
-        private DelegateCommand _navigateToSignInView;
-        public DelegateCommand NavigateToSignInView =>
-            _navigateToSignInView ?? (_navigateToSignInView = new DelegateCommand(ExecuteNavigateToSignInView, CanExecuteNavigateToSignInView)
+        private DelegateCommand<string> _navigateToSignInView;
+        public DelegateCommand<string> NavigateToSignInView =>
+            _navigateToSignInView ?? (_navigateToSignInView = new DelegateCommand<string>(ExecuteNavigateToSignInView, CanExecuteNavigateToSignInView)
             .ObservesProperty<String>(() => UserLogin)
             .ObservesProperty<String>(() => UserPassword)
             .ObservesProperty<String>(() => ConfirmUserPassword));
 
 
-        private bool CanExecuteNavigateToSignInView()
+        private bool CanExecuteNavigateToSignInView(string parameter)
         {
             return CheckEntry.EntryIsEmpty(_userLogin, _userPassword, _confirmUserPassword);
         }
 
-        void ExecuteNavigateToSignInView()
+        void ExecuteNavigateToSignInView(string parameter)
         {
-
+            if(_loginValidators.LoginValid(_userLogin))
+            {
+                if (_passwordValidators.PasswordValid(_userPassword, _confirmUserPassword))
+                {
+                    var login = new NavigationParameters();
+                    login.Add("loginFromSignUpView", parameter);
+                    NavigationService.NavigateAsync($"{nameof(SignIn)}", login);
+                }
+                else
+                {
+                    _pageDialogService.DisplayAlertAsync("Password is not valid", _passwordValidators.PasswarodError, "ok");
+                }
+            }
+            _pageDialogService.DisplayAlertAsync("Login is not valid", "Login should not start with numbers.", "ok");
         }
     }
+
+    //"Password is not valid", "Password be at least 4 and no more than 16 and must contain at least one uppercase letter, one lowercase letter and one number."
 }

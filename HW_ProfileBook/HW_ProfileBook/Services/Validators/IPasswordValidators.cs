@@ -6,7 +6,8 @@ namespace HW_ProfileBook.Services.Validators
 {
     public interface IPasswordValidators
     {
-        bool PasswordValid(string password);
+        string PasswarodError { get; set; }
+        bool PasswordValid(string password, string confirmPassword);
         bool PasswordConfirm(string password, string confirmPassword);
     }
 }
