@@ -4,9 +4,9 @@ using System.Text;
 
 namespace HW_ProfileBook.Services.Validators
 {
-    public class CheckEntry : IEmptyEnrty
+    public static class CheckEntry
     {
-        public bool EntryIsEmpty(params string[] entryInput)
+        public static bool EntryIsEmpty(params string[] entryInput)
         {
             var count = 0;
             foreach (var item in entryInput)
@@ -17,7 +17,7 @@ namespace HW_ProfileBook.Services.Validators
             return count == entryInput.Length;
         }
 
-        public void ResetEntry(params string[] entryInput)
+        public static void ResetEntry(params string[] entryInput)
         {
             for (int i = 0; i < entryInput.Length; i++)
             {

@@ -11,7 +11,6 @@ namespace HW_ProfileBook.ViewModels
     {
         private ILoginValidators _loginValidators;
         private IPasswordValidators _passwordValidators;
-        private IEmptyEnrty _emptyEnrty;
         private IAutorithation _autorithation;
         private IPageDialogService _dialogService;
 
@@ -21,8 +20,7 @@ namespace HW_ProfileBook.ViewModels
            ILoginValidators loginValidators,
            IPasswordValidators passwordValidators,
            IAutorithation autorithation,
-           IPageDialogService dialogService,
-           IEmptyEnrty emptyEnrty)
+           IPageDialogService dialogService)
            : base(navigationService)
         {
             Title = "Users SignIn";
@@ -30,29 +28,20 @@ namespace HW_ProfileBook.ViewModels
             _passwordValidators = passwordValidators;
             _autorithation = autorithation;
             _dialogService = dialogService;
-            _emptyEnrty = emptyEnrty;
         }
 
         private string _userLogin;
         public string UserLogin
         {
             get { return _userLogin; }
-            set
-            {
-                SetProperty(ref _userLogin, value);
-                IsEnabled = _emptyEnrty.EntryIsEmpty(_userLogin, _userPassword);
-            }
+            set { SetProperty(ref _userLogin, value); }
         }
 
         private string _userPassword;
         public string UserPassword
         {
             get { return _userPassword; }
-            set
-            {
-                SetProperty(ref _userPassword, value);
-                IsEnabled = _emptyEnrty.EntryIsEmpty(_userLogin, _userPassword);
-            }
+            set { SetProperty(ref _userPassword, value); }
         }
 
         private bool _isEnabled;
@@ -64,12 +53,14 @@ namespace HW_ProfileBook.ViewModels
 
         public DelegateCommand _navigateToMainList;
         public DelegateCommand NavigateToMainList =>
-            _navigateToMainList ?? (_navigateToMainList = new DelegateCommand(ExecuteNavigateToMainList/*, CanExecuteNavigateToMainListCommand*/));
+            _navigateToMainList ?? (_navigateToMainList = new DelegateCommand(ExecuteNavigateToMainList, CanExecuteNavigateToMainListCommand)
+            .ObservesProperty<String>(() => UserPassword)
+            .ObservesProperty<String>(() => UserLogin));
 
-        //private bool CanExecuteNavigateToMainListCommand()
-        //{
-        //    return false;
-        //}
+        private bool CanExecuteNavigateToMainListCommand()
+        {
+            return CheckEntry.EntryIsEmpty(_userLogin, _userPassword);
+        }
 
         private void ExecuteNavigateToMainList()
         {
@@ -78,7 +69,7 @@ namespace HW_ProfileBook.ViewModels
             else
             {
                 _dialogService.DisplayAlertAsync("Error", "Invalid login or password!", "OK");
-                _emptyEnrty.ResetEntry(UserPassword);
+                CheckEntry.ResetEntry(UserPassword);
             }
         }
 
