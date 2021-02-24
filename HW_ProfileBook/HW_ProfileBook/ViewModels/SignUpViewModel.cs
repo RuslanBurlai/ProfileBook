@@ -4,6 +4,8 @@ using HW_ProfileBook.Services.Validators;
 using System;
 using HW_ProfileBook.Views;
 using Prism.Services;
+using HW_ProfileBook.Model;
+using HW_ProfileBook.Repository;
 
 namespace HW_ProfileBook.ViewModels
 {
@@ -12,17 +14,24 @@ namespace HW_ProfileBook.ViewModels
         private ILoginValidators _loginValidators;
         private IPasswordValidators _passwordValidators;
         private IPageDialogService _pageDialogService;
+        private IUserRepo _userRepo;
+        private IConnectionSQLiteDb _connectionSQLiteDb;
+
         public SignUpViewModel(
             INavigationService navigationService,
             ILoginValidators loginValidators,
             IPasswordValidators passwordValidators,
-            IPageDialogService pageDialogService)
+            IPageDialogService pageDialogService,
+            IUserRepo userRepo,
+            IConnectionSQLiteDb connectionSQLiteDb)
             : base(navigationService)
         {
             Title = "Users SignUp";
             _loginValidators = loginValidators;
             _passwordValidators = passwordValidators;
             _pageDialogService = pageDialogService;
+            _userRepo = userRepo;
+            _connectionSQLiteDb = connectionSQLiteDb;
         }
 
         private string _userLogin;
@@ -65,16 +74,33 @@ namespace HW_ProfileBook.ViewModels
             {
                 if (_passwordValidators.PasswordValid(_userPassword, _confirmUserPassword))
                 {
-                    var login = new NavigationParameters();
-                    login.Add("loginFromSignUpView", parameter);
-                    NavigationService.NavigateAsync($"{nameof(SignIn)}", login);
+                    User user = new User()
+                    {
+                        Login = _userLogin, // Ruslan
+                        Password = _userPassword // 11rR
+                    };
+
+                    if (_userRepo.GetSameUser(user))
+                    {
+                        using (_connectionSQLiteDb.GetUserConnection())
+                        {
+                            _userRepo.AddContact(user);
+                        }
+                        var login = new NavigationParameters();
+                        login.Add("loginFromSignUpView", parameter);
+                        NavigationService.NavigateAsync($"{nameof(SignIn)}", login);
+                    }
                 }
                 else
                 {
                     _pageDialogService.DisplayAlertAsync("Password is not valid", _passwordValidators.PasswarodError, "ok");
                 }
             }
-            _pageDialogService.DisplayAlertAsync("Login is not valid", "Login should not start with numbers.", "ok");
+            else
+            {
+                _pageDialogService.DisplayAlertAsync("Login is not valid", "Login should not start with numbers.", "ok");
+
+            }
         }
     }
 

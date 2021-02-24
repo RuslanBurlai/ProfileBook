@@ -9,6 +9,7 @@ using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
 using System;
 using System.IO;
+using HW_ProfileBook.Repository;
 
 namespace HW_ProfileBook
 {
@@ -55,6 +56,8 @@ namespace HW_ProfileBook
             containerRegistry.RegisterInstance<ILoginValidators>(Container.Resolve<LoginValidators>());
             containerRegistry.RegisterInstance<IPasswordValidators>(Container.Resolve<PasswordValidators>());
             containerRegistry.RegisterInstance<IAutorithation>(Container.Resolve<Autorithation>());
+            containerRegistry.RegisterInstance<IConnectionSQLiteDb>(Container.Resolve<ConnectionSQLliteDb>());
+            containerRegistry.RegisterInstance<IUserRepo>(Container.Resolve<UserRepo>());
         }
     }
 }

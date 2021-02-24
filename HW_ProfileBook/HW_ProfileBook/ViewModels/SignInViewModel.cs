@@ -6,6 +6,7 @@ using HW_ProfileBook.Services.Autorization;
 using Prism.Services;
 using HW_ProfileBook.Views;
 using Xamarin.Forms;
+using HW_ProfileBook.Repository;
 
 namespace HW_ProfileBook.ViewModels
 {
@@ -15,14 +16,15 @@ namespace HW_ProfileBook.ViewModels
         private IPasswordValidators _passwordValidators;
         private IAutorithation _autorithation;
         private IPageDialogService _dialogService;
-
+        private IUserRepo _userRepo;
 
         public SignInViewModel(
            INavigationService navigationService,
            ILoginValidators loginValidators,
            IPasswordValidators passwordValidators,
            IAutorithation autorithation,
-           IPageDialogService dialogService)
+           IPageDialogService dialogService,
+           IUserRepo userRepo)
            : base(navigationService)
         {
             Title = "Users SignIn";
@@ -30,6 +32,7 @@ namespace HW_ProfileBook.ViewModels
             _passwordValidators = passwordValidators;
             _autorithation = autorithation;
             _dialogService = dialogService;
+            _userRepo = userRepo;
         }
 
         private string _userLogin;
@@ -59,8 +62,12 @@ namespace HW_ProfileBook.ViewModels
 
         private void ExecuteNavigateToMainList()
         {
-            if (_autorithation.CheckLoginPassword(_userLogin, _userPassword))
+            if (_userRepo.GetUserId(_userLogin, _userPassword) != null)
+            {
+                var i = _userRepo.GetUserId(_userLogin, _userPassword);
                 NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainList)}");
+
+            }
             else
             {
                 _dialogService.DisplayAlertAsync("Error", "Invalid login or password!", "OK");
