@@ -6,6 +6,7 @@ namespace HW_ProfileBook.Services.Autorization
 {
     public interface IAutorithation
     {
-        bool CheckLoginPassword(string login, string password);
+        bool IsAutorized(int id);
+        int LogOut();
     }
 }

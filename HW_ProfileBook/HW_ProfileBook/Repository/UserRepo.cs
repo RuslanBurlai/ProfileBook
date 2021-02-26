@@ -15,13 +15,23 @@ namespace HW_ProfileBook.Repository
             _connection = db.GetUserConnection();
             _connection.CreateTable<User>();
         }
+
         public void AddContact(User user) => _connection.Insert(user);
 
-        public bool GetSameUser(User user) => !(_connection.Table<User>().Contains<User>(user));
+        public bool GetSameUser(string login)
+        {
+            var usersList = GetUsers();
+            foreach (var user in usersList)
+            {
+                if (user.Login == login)
+                    return true;
+            }
+            return false;
+        } 
 
         public IEnumerable<User> GetUsers() => _connection.Table<User>().ToList();
 
-        public int? GetUserId(string login, string password)
+        public int GetUserId(string login, string password)
         {
             int id = 0;
             var list = _connection.Table<User>()

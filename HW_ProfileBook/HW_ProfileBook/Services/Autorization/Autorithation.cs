@@ -6,9 +6,7 @@ namespace HW_ProfileBook.Services.Autorization
 {
     public class Autorithation : IAutorithation
     {
-        public bool CheckLoginPassword(string login, string password)
-        {
-            return login == "a" && password == "a";
-        }
+        public bool IsAutorized(int id) => id != 0;
+        public int LogOut() => 0;
     }
 }

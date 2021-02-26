@@ -34,6 +34,7 @@ namespace HW_ProfileBook.ViewModels
             _connectionSQLiteDb = connectionSQLiteDb;
         }
 
+        #region --- Properties ---
         private string _userLogin;
         public string UserLogin
         {
@@ -62,13 +63,16 @@ namespace HW_ProfileBook.ViewModels
             .ObservesProperty<String>(() => UserPassword)
             .ObservesProperty<String>(() => ConfirmUserPassword));
 
+        #endregion
+
+        #region --- Private Helpers ---
 
         private bool CanExecuteNavigateToSignInView(string parameter)
         {
             return CheckEntry.EntryIsEmpty(_userLogin, _userPassword, _confirmUserPassword);
         }
 
-        void ExecuteNavigateToSignInView(string parameter)
+        private void ExecuteNavigateToSignInView(string parameter)
         {
             if(_loginValidators.LoginValid(_userLogin))
             {
@@ -76,11 +80,11 @@ namespace HW_ProfileBook.ViewModels
                 {
                     User user = new User()
                     {
-                        Login = _userLogin, // Ruslan
-                        Password = _userPassword // 11rR
+                        Login = _userLogin,
+                        Password = _userPassword
                     };
 
-                    if (_userRepo.GetSameUser(user))
+                    if (!_userRepo.GetSameUser(user.Login))
                     {
                         using (_connectionSQLiteDb.GetUserConnection())
                         {
@@ -89,6 +93,10 @@ namespace HW_ProfileBook.ViewModels
                         var login = new NavigationParameters();
                         login.Add("loginFromSignUpView", parameter);
                         NavigationService.NavigateAsync($"{nameof(SignIn)}", login);
+                    }
+                    else
+                    {
+                        _pageDialogService.DisplayAlertAsync("Login error", "This login already taken.", "ok");
                     }
                 }
                 else
@@ -99,9 +107,10 @@ namespace HW_ProfileBook.ViewModels
             else
             {
                 _pageDialogService.DisplayAlertAsync("Login is not valid", "Login should not start with numbers.", "ok");
-
             }
         }
+
+        #endregion
     }
 
     //"Password is not valid", "Password be at least 4 and no more than 16 and must contain at least one uppercase letter, one lowercase letter and one number."

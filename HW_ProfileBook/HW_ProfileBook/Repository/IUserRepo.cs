@@ -9,8 +9,8 @@ namespace HW_ProfileBook.Repository
     {
         IEnumerable<User> GetUsers();
         void AddContact(User contact);
-        int? GetUserId(string login, string password);
-        bool GetSameUser(User user);
+        int GetUserId(string login, string password);
+        bool GetSameUser(string login);
 
     }
 }

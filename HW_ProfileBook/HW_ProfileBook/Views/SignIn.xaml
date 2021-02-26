@@ -23,7 +23,6 @@
                 IsPassword="True"
                 Placeholder="Password"
                 Text="{Binding UserPassword}" />
-            <!--<CheckBox IsChecked="{Binding IsEnabled}" />-->
         </StackLayout>
 
         <StackLayout

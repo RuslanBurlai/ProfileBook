@@ -6,15 +6,15 @@ namespace HW_ProfileBook.Services.Validators
 {
     public static class CheckEntry
     {
-        public static bool EntryIsEmpty(params string[] entryInput)
+        public static bool EntryIsEmpty(params string[] entrysInput)
         {
             var count = 0;
-            foreach (var item in entryInput)
+            foreach (var inputText in entrysInput)
             {
-                if (!string.IsNullOrWhiteSpace(item))
+                if (!string.IsNullOrWhiteSpace(inputText))
                     count++;
             }
-            return count == entryInput.Length;
+            return count == entrysInput.Length;
         }
 
         public static string ResetEntry()
