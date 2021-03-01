@@ -7,6 +7,8 @@ using Prism.Commands;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace HW_ProfileBook.ViewModels
@@ -15,31 +17,37 @@ namespace HW_ProfileBook.ViewModels
     {
         private ISettingsManager _settingsManager;
         private IAutorithation _autorithation;
-        private IConnectionSQLiteDb _connectionSQLiteDb;
-        private IProfilesRepo _profilesRepo;
+        private IRepository _repository;
 
         public MainListViewModel(
             INavigationService navigationService,
             ISettingsManager settingsManager,
             IAutorithation autorithation,
-            IConnectionSQLiteDb connectionSQLiteDb,
-            IProfilesRepo profilesRepo) :
+            IRepository repository) :
             base(navigationService)
         {
             Title = "Main List";
             _settingsManager = settingsManager;
             _autorithation = autorithation;
-            _connectionSQLiteDb = connectionSQLiteDb;
-            _profilesRepo = profilesRepo;
+            _repository = repository;
         }
 
         #region --- Public Properties ---
+
         private IEnumerable<Profile> _profiles;
         public IEnumerable<Profile> Profiles
         {
             get => _profiles;
             set => SetProperty(ref _profiles, value);
         }
+
+        private ObservableCollection<Profile> _profilesO;
+        public ObservableCollection<Profile> ProfilesO
+        {
+            get { return _profilesO; }
+            set { SetProperty(ref _profilesO, value); }
+        }
+
         private Profile _selectProfiles;
         public Profile SelectProfiles
         {
@@ -52,37 +60,52 @@ namespace HW_ProfileBook.ViewModels
             _logOut ?? (_logOut = new DelegateCommand(ExecuteLogout));
 
 
-        private DelegateCommand _navigateToAddEditProfile;
-        public DelegateCommand NavigateToAddEditProfile =>
-            _navigateToAddEditProfile ?? (_navigateToAddEditProfile = new DelegateCommand(ExecuteNavigateToAddEditProfile));
+        private DelegateCommand _settings;
+        public DelegateCommand Settings =>
+
+            _settings ?? (_settings = new DelegateCommand(ExecuteSettings));
+
+        void ExecuteSettings()
+        {
+            NavigationService.NavigateAsync("Settings");
+        }
+
+        private DelegateCommand<object> _navigateToAddEditProfile;
+        public DelegateCommand<object> NavigateToAddEditProfile =>
+            _navigateToAddEditProfile ?? (_navigateToAddEditProfile = new DelegateCommand<object>(ExecuteNavigateToAddEditProfile));
 
         private DelegateCommand<object> _deleteProfile;
         public DelegateCommand<object> DeleteProfile =>
             _deleteProfile ?? (_deleteProfile = new DelegateCommand<object>(ExecuteDeleteProfile));
 
-        void ExecuteDeleteProfile(object parameter)
+        private DelegateCommand<object> _editProfile;
+        public DelegateCommand<object> EditProfile =>
+            _editProfile ?? (_editProfile = new DelegateCommand<object>(ExecuteEditProfile));
+
+        void ExecuteEditProfile(object parameter)
+        {
+            var selectedProfile = new NavigationParameters();
+            selectedProfile.Add("p", parameter);
+            NavigationService.NavigateAsync(nameof(AddEditProfile), selectedProfile);
+        }
+        private void ExecuteDeleteProfile(object parameter)
         {
             Profile selectedProfile = (Profile)parameter;
-            _profilesRepo.DeleteProfile(selectedProfile);
-            Profiles = _profilesRepo.GetProfiles(_settingsManager.Id);
+            _repository.DeleteItem<Profile>(selectedProfile);
+            Profiles = _repository.GetItems<Profile>();
         }
 
         #endregion
 
         #region --- Private Helpers ---
-        private void ExecuteNavigateToAddEditProfile()
+        private void ExecuteNavigateToAddEditProfile(object parameter)
         {
             NavigationService.NavigateAsync(nameof(AddEditProfile));
         }
 
-        private void ExecuteEditProfile(object parameter)
+        private void ExecuteLogout()
         {
-            Profile selectedProfile = (Profile)parameter;
-            _profilesRepo.DeleteProfile(selectedProfile);
-        }
-
-        void ExecuteLogout()
-        {
+            _autorithation.LogOut();
             NavigationService.NavigateAsync("/NavigationPage/SignIn");
         }
 
@@ -92,12 +115,12 @@ namespace HW_ProfileBook.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            Profiles = _profilesRepo.GetProfiles(_settingsManager.Id);
+            Profiles = _repository.GetItems<Profile>().Where(x => x.UserId == _settingsManager.Id);
         }
 
         public override void Initialize(INavigationParameters parameters)
         {
-            Profiles = _profilesRepo.GetProfiles(_settingsManager.Id);
+            Profiles = _repository.GetItems<Profile>().Where(x => x.UserId == _settingsManager.Id);
         }
 
         #endregion

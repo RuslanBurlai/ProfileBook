@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using HW_ProfileBook.Repository;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Text;
 namespace HW_ProfileBook.Model
 {
     [Table("Profiles")]
-    public class Profile
+    public class Profile : IEntityBaseForModel
     {
         [PrimaryKey, AutoIncrement, Column("id")]
         public int Id { get; set; }

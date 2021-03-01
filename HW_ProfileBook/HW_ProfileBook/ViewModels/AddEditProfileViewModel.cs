@@ -13,24 +13,24 @@ namespace HW_ProfileBook.ViewModels
 {
     public class AddEditProfileViewModel : ViewModelBase
     {
-        private IConnectionSQLiteDb _connectionSQLiteDb;
-        private IProfilesRepo _profilesRepo;
         private ISettingsManager _settingsManager;
+        private IRepository _repository;
 
         public AddEditProfileViewModel(
             INavigationService navigationService,
-            IConnectionSQLiteDb connectionSQLiteDb,
-            IProfilesRepo profilesRepo,
-            ISettingsManager settingsManager) : 
+            ISettingsManager settingsManager,
+            
+            IRepository repository) :
             base(navigationService)
         {
             Title = "Add Profile";
-            _connectionSQLiteDb = connectionSQLiteDb;
-            _profilesRepo = profilesRepo;
             _settingsManager = settingsManager;
+            _repository = repository;
         }
 
         #region --- Property ---
+
+        private Profile _profile;
 
         private string _profileImage;
         public string ProfileImage
@@ -70,26 +70,62 @@ namespace HW_ProfileBook.ViewModels
 
         private void ExecuteSaveProfile()
         {
-            var newProfile = CreateProfile(_settingsManager.Id, _name, _nickName, _description, _profileImage);
-            _profilesRepo.AddProfile(newProfile);
-            IEnumerable<Profile> p = _profilesRepo.GetProfiles(_settingsManager.Id);
-            NavigationService.GoBackAsync();
+            if(_profile == null)
+            {
+                var newProfile = CreateProfile(_settingsManager.Id, _name, _nickName, _description, _profileImage);
+
+                _repository.AddItem<Profile>(newProfile);
+            }  
+            else
+            {
+                var updateProfile = CreateProfile(_settingsManager.Id, _name, _nickName, _description, _profileImage);
+                _repository.AddItem(updateProfile);
+            }
+            NavigationService.GoBackAsync(null, false, false);
         }
 
         private Profile CreateProfile(int userId, string name, string nickName, string description, string profImage)
         {
-            var newProfile = new Profile
+            if(_profile == null)
             {
-                //ProfileImage = ""
-                UserId = userId,
-                NickNameLabel = nickName,
-                NameLabel = name,
-                DateLabel = DateTime.Now,
-                Description = description
-            };
-            return newProfile;
+                var _profile = new Profile
+                {
+                    //ProfileImage = ""
+                    UserId = userId,
+                    NickNameLabel = nickName,
+                    NameLabel = name,
+                    DateLabel = DateTime.Now,
+                    Description = description
+                };
+            }
+            else
+            {
+                _profile.NickNameLabel = NickName;
+                _profile.NameLabel = Name;
+                _profile.Description = Description;
+                _profile.ProfileImage = ProfileImage;
+            }
+            return _profile;
         }
 
         #endregion
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+
+        }
+
+        public override void Initialize(INavigationParameters parameters)
+        {
+            var selectedProfile = parameters.GetValue<Profile>("p");
+            if (selectedProfile != null)
+            {
+                _profile = selectedProfile;
+                Name = _profile.NameLabel;
+                NickName = _profile.NameLabel;
+                Description = _profile.Description;
+                ProfileImage = _profile.ProfileImage;
+            }
+        }
     }
 }

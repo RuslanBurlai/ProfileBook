@@ -7,13 +7,15 @@ using Prism.Ioc;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
-using HW_ProfileBook.Repository;
 using HW_ProfileBook.Services.Settings;
+using HW_ProfileBook.Services.Authentication;
+using HW_ProfileBook.Repository;
 
 namespace HW_ProfileBook
 {
     public partial class App
     {
+        private IAutorithation _autorithation => Container.Resolve<IAutorithation>();
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
@@ -22,12 +24,18 @@ namespace HW_ProfileBook
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync("NavigationPage/SignIn");
+            if(_autorithation.IsAutorized())
+            { 
+                await NavigationService.NavigateAsync("NavigationPage/MainList");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync("NavigationPage/SignIn");
+            }
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<SignIn, SignInViewModel>();
@@ -36,13 +44,11 @@ namespace HW_ProfileBook
             containerRegistry.RegisterForNavigation<AddEditProfile, AddEditProfileViewModel>();
 
             //Servies
+            containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
+
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
-            containerRegistry.RegisterInstance<ILoginValidators>(Container.Resolve<LoginValidators>());
-            containerRegistry.RegisterInstance<IPasswordValidators>(Container.Resolve<PasswordValidators>());
             containerRegistry.RegisterInstance<IAutorithation>(Container.Resolve<Autorithation>());
-            containerRegistry.RegisterInstance<IConnectionSQLiteDb>(Container.Resolve<ConnectionSQLliteDb>());
-            containerRegistry.RegisterInstance<IUserRepo>(Container.Resolve<UserRepo>());
-            containerRegistry.RegisterInstance<IProfilesRepo>(Container.Resolve<ProfilesRepo>());
+            containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository.Repository>());
         }
     }
 }

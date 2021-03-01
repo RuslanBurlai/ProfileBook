@@ -11,27 +11,18 @@ namespace HW_ProfileBook.ViewModels
 {
     public class SignUpViewModel : ViewModelBase
     {
-        private ILoginValidators _loginValidators;
-        private IPasswordValidators _passwordValidators;
         private IPageDialogService _pageDialogService;
-        private IUserRepo _userRepo;
-        private IConnectionSQLiteDb _connectionSQLiteDb;
+        private IRepository _repository;
 
         public SignUpViewModel(
             INavigationService navigationService,
-            ILoginValidators loginValidators,
-            IPasswordValidators passwordValidators,
             IPageDialogService pageDialogService,
-            IUserRepo userRepo,
-            IConnectionSQLiteDb connectionSQLiteDb)
+            IRepository repository)
             : base(navigationService)
         {
             Title = "Users SignUp";
-            _loginValidators = loginValidators;
-            _passwordValidators = passwordValidators;
             _pageDialogService = pageDialogService;
-            _userRepo = userRepo;
-            _connectionSQLiteDb = connectionSQLiteDb;
+            _repository = repository;
         }
 
         #region --- Properties ---
@@ -69,14 +60,14 @@ namespace HW_ProfileBook.ViewModels
 
         private bool CanExecuteNavigateToSignInView(string parameter)
         {
-            return CheckEntry.EntryIsEmpty(_userLogin, _userPassword, _confirmUserPassword);
+            return EntryHelper.EntryIsEmpty(_userLogin, _userPassword, _confirmUserPassword);
         }
 
         private void ExecuteNavigateToSignInView(string parameter)
         {
-            if(_loginValidators.LoginValid(_userLogin))
+            if (Validator.LoginValid(_userLogin))
             {
-                if (_passwordValidators.PasswordValid(_userPassword, _confirmUserPassword))
+                if (Validator.PasswordValid(_userPassword, _confirmUserPassword))
                 {
                     User user = new User()
                     {
@@ -84,12 +75,9 @@ namespace HW_ProfileBook.ViewModels
                         Password = _userPassword
                     };
 
-                    if (!_userRepo.GetSameUser(user.Login))
+                    if (!_repository.GetSameUser<User>(user.Login))
                     {
-                        using (_connectionSQLiteDb.GetUserConnection())
-                        {
-                            _userRepo.AddContact(user);
-                        }
+                        _repository.AddItem(user);
                         var login = new NavigationParameters();
                         login.Add("loginFromSignUpView", parameter);
                         NavigationService.NavigateAsync($"{nameof(SignIn)}", login);
@@ -101,7 +89,7 @@ namespace HW_ProfileBook.ViewModels
                 }
                 else
                 {
-                    _pageDialogService.DisplayAlertAsync("Password is not valid", _passwordValidators.PasswarodError, "ok");
+                    _pageDialogService.DisplayAlertAsync("Password is not valid", Validator.GetError, "ok");
                 }
             }
             else

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HW_ProfileBook.Services.Validators
 {
-    public static class CheckEntry
+    public static class EntryHelper
     {
         public static bool EntryIsEmpty(params string[] entrysInput)
         {

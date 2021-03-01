@@ -15,30 +15,27 @@ namespace HW_ProfileBook.ViewModels
 {
     public class SignInViewModel : ViewModelBase
     {
-        private ILoginValidators _loginValidators;
-        private IPasswordValidators _passwordValidators;
         private IAutorithation _autorithation;
         private IPageDialogService _dialogService;
-        private IUserRepo _userRepo;
+        //private IUserRepo _userRepo;
         private ISettingsManager _settingsManager;
+        private IRepository _repository;
 
         public SignInViewModel(
            INavigationService navigationService,
-           ILoginValidators loginValidators,
-           IPasswordValidators passwordValidators,
            IAutorithation autorithation,
            IPageDialogService dialogService,
-           IUserRepo userRepo,
+           //IUserRepo userRepo,
+           IRepository repository,
            ISettingsManager settingsManager)
            : base(navigationService)
         {
             Title = "Users SignIn";
-            _loginValidators = loginValidators;
-            _passwordValidators = passwordValidators;
             _dialogService = dialogService;
-            _userRepo = userRepo;
+            //_userRepo = userRepo;
             _settingsManager = settingsManager;
             _autorithation = autorithation;
+            _repository = repository;
         }
 
         #region --- Properties ---
@@ -57,8 +54,6 @@ namespace HW_ProfileBook.ViewModels
             set { SetProperty(ref _userPassword, value); }
         }
 
-
-
         public DelegateCommand _navigateToMainList;
         public DelegateCommand NavigateToMainList =>
             _navigateToMainList ?? (_navigateToMainList = new DelegateCommand(ExecuteNavigateToMainList, CanExecuteNavigateToMainListCommand)
@@ -72,24 +67,24 @@ namespace HW_ProfileBook.ViewModels
         #endregion
 
         #region --- Private Helpers ---
+
         private bool CanExecuteNavigateToMainListCommand()
         {
-            return CheckEntry.EntryIsEmpty(_userLogin, _userPassword);
+            return EntryHelper.EntryIsEmpty(_userLogin, _userPassword);
         }
-
 
         private void ExecuteNavigateToMainList()
         {
-            var userId = _userRepo.GetUserId(_userLogin, _userPassword);
-            if (_autorithation.IsAutorized(userId))
+            //_settingsManager.Id = _authentication.GetUserId(_userLogin, _userPassword);
+            _settingsManager.Id = _repository.GetId<User>(_userLogin, _userPassword);
+            if (_autorithation.IsAutorized())
             {
-                _settingsManager.Id = userId;
                 NavigationService.NavigateAsync("/NavigationPage/MainList");
             }
             else
             {
                 _dialogService.DisplayAlertAsync("Error", "Invalid login or password!", "OK");
-                UserPassword = CheckEntry.ResetEntry();
+                UserPassword = EntryHelper.ResetEntry();
             }
         }
 
@@ -102,15 +97,9 @@ namespace HW_ProfileBook.ViewModels
 
         #region --- Overrides ---
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
-        {
-            //if (_settingsManager.Id != 0)
-            //    NavigationService.NavigateAsync("MainList");
-        }
-
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
-            UserPassword = CheckEntry.ResetEntry();
+            UserPassword = EntryHelper.ResetEntry();
         }
 
         #endregion
