@@ -1,6 +1,7 @@
 ﻿using HW_ProfileBook.Model;
 using HW_ProfileBook.Repository;
 using HW_ProfileBook.Services.Settings;
+using HW_ProfileBook.Services.Validators;
 using HW_ProfileBook.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -62,7 +63,10 @@ namespace HW_ProfileBook.ViewModels
 
         private DelegateCommand _saveProfile;
         public DelegateCommand SaveProfile =>
-            _saveProfile ?? (_saveProfile = new DelegateCommand(ExecuteSaveProfile));
+            _saveProfile ?? (_saveProfile = new DelegateCommand(ExecuteSaveProfile, CanExecuteSaveProfile))
+            .ObservesProperty<string>(() => NickName)
+            .ObservesProperty<string>(() => Name)
+            .ObservesProperty<string>(() => Description);
 
         #endregion
 
@@ -82,6 +86,11 @@ namespace HW_ProfileBook.ViewModels
                 _repository.AddItem(updateProfile);
             }
             NavigationService.GoBackAsync(null, false, false);
+        }
+
+        private bool CanExecuteSaveProfile()
+        {
+            return EntryHelper.EntryIsEmpty(_name, _nickName, _description);
         }
 
         private Profile CreateProfile(int userId, string name, string nickName, string description, string profImage)
@@ -110,10 +119,7 @@ namespace HW_ProfileBook.ViewModels
 
         #endregion
 
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-
-        }
+        #region --- Overrides ---
 
         public override void Initialize(INavigationParameters parameters)
         {
@@ -127,5 +133,7 @@ namespace HW_ProfileBook.ViewModels
                 ProfileImage = _profile.ProfileImage;
             }
         }
+
+        #endregion
     }
 }
