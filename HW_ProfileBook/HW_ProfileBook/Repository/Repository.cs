@@ -46,32 +46,5 @@ namespace HW_ProfileBook.Repository
         {
             return _database.Value.Table<T>();
         }
-
-        public void UpdateItem<T>(T item) where T : IEntityBaseForModel, new()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetId<T>(string login, string password) where T : IEntityBaseForModel, new()
-        {
-            int id = 0;
-            var list = GetItems<User>()
-                .Where(user => user.Login == login && user.Password == password)
-                .Select(user => user.Id);
-            foreach (var item in list)
-                id = item;
-            return id;
-        }
-
-        public bool GetSameUser<T>(string login) where T : IEntityBaseForModel, new()
-        {
-            var usersList = GetItems<User>();
-            foreach (var user in usersList)
-            {
-                if (user.Login == login)
-                    return true;
-            }
-            return false;
-        }
     }
 }

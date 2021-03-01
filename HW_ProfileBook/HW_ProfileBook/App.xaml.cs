@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using HW_ProfileBook.Services.Settings;
 using HW_ProfileBook.Services.Authentication;
 using HW_ProfileBook.Repository;
+using HW_ProfileBook.Dialogs;
 
 namespace HW_ProfileBook
 {
@@ -49,6 +50,10 @@ namespace HW_ProfileBook
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IAutorithation>(Container.Resolve<Autorithation>());
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository.Repository>());
+            containerRegistry.RegisterInstance<IAuthentication>(Container.Resolve<Authentication>());
+
+            //Dialogs
+            containerRegistry.RegisterDialog<SelectImage, SelectImageViewModel>();
         }
     }
 }

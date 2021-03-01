@@ -1,14 +1,12 @@
-﻿using HW_ProfileBook.Model;
+﻿using HW_ProfileBook.Dialogs;
+using HW_ProfileBook.Model;
 using HW_ProfileBook.Repository;
 using HW_ProfileBook.Services.Settings;
 using HW_ProfileBook.Services.Validators;
-using HW_ProfileBook.Views;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HW_ProfileBook.ViewModels
 {
@@ -16,17 +14,19 @@ namespace HW_ProfileBook.ViewModels
     {
         private ISettingsManager _settingsManager;
         private IRepository _repository;
+        private IDialogService _dialogService;
 
         public AddEditProfileViewModel(
             INavigationService navigationService,
             ISettingsManager settingsManager,
-            
-            IRepository repository) :
+            IRepository repository,
+            IDialogService dialogService) :
             base(navigationService)
         {
             Title = "Add Profile";
             _settingsManager = settingsManager;
             _repository = repository;
+            _dialogService = dialogService;
         }
 
         #region --- Property ---
@@ -67,6 +67,16 @@ namespace HW_ProfileBook.ViewModels
             .ObservesProperty<string>(() => NickName)
             .ObservesProperty<string>(() => Name)
             .ObservesProperty<string>(() => Description);
+
+        private DelegateCommand _changeImage;
+
+        public DelegateCommand ChangeImage =>
+            _changeImage ?? (_changeImage = new DelegateCommand(ExecuteChangeImage));
+
+        void ExecuteChangeImage()
+        {
+            _dialogService.ShowDialog(nameof(SelectImage));
+        }
 
         #endregion
 

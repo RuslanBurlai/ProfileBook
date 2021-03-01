@@ -6,6 +6,7 @@ using HW_ProfileBook.Views;
 using Prism.Services;
 using HW_ProfileBook.Model;
 using HW_ProfileBook.Repository;
+using HW_ProfileBook.Services.Authentication;
 
 namespace HW_ProfileBook.ViewModels
 {
@@ -13,16 +14,19 @@ namespace HW_ProfileBook.ViewModels
     {
         private IPageDialogService _pageDialogService;
         private IRepository _repository;
+        private IAuthentication _authentication;
 
         public SignUpViewModel(
             INavigationService navigationService,
             IPageDialogService pageDialogService,
-            IRepository repository)
+            IRepository repository,
+            IAuthentication authentication)
             : base(navigationService)
         {
             Title = "Users SignUp";
             _pageDialogService = pageDialogService;
             _repository = repository;
+            _authentication = authentication;
         }
 
         #region --- Properties ---
@@ -75,11 +79,13 @@ namespace HW_ProfileBook.ViewModels
                         Password = _userPassword
                     };
 
-                    if (!_repository.GetSameUser<User>(user.Login))
+                    if (!_authentication.GetSameUser(user.Login))
                     {
                         _repository.AddItem(user);
-                        var login = new NavigationParameters();
-                        login.Add("loginFromSignUpView", parameter);
+                        var login = new NavigationParameters
+                        {
+                            { nameof(SignUp), parameter }
+                        };
                         NavigationService.NavigateAsync($"{nameof(SignIn)}", login);
                     }
                     else

@@ -5,11 +5,9 @@ using HW_ProfileBook.Services.Validators;
 using HW_ProfileBook.Services.Autorization;
 using Prism.Services;
 using HW_ProfileBook.Views;
-using Xamarin.Forms;
-using HW_ProfileBook.Repository;
-using HW_ProfileBook.Model;
-using System.Collections.Generic;
 using HW_ProfileBook.Services.Settings;
+using HW_ProfileBook.Services.Authentication;
+using Xamarin.Forms;
 
 namespace HW_ProfileBook.ViewModels
 {
@@ -17,25 +15,22 @@ namespace HW_ProfileBook.ViewModels
     {
         private IAutorithation _autorithation;
         private IPageDialogService _dialogService;
-        //private IUserRepo _userRepo;
         private ISettingsManager _settingsManager;
-        private IRepository _repository;
+        private IAuthentication _authentication;
 
         public SignInViewModel(
            INavigationService navigationService,
            IAutorithation autorithation,
            IPageDialogService dialogService,
-           //IUserRepo userRepo,
-           IRepository repository,
-           ISettingsManager settingsManager)
+           ISettingsManager settingsManager,
+           IAuthentication authentication)
            : base(navigationService)
         {
             Title = "Users SignIn";
             _dialogService = dialogService;
-            //_userRepo = userRepo;
             _settingsManager = settingsManager;
             _autorithation = autorithation;
-            _repository = repository;
+            _authentication = authentication;
         }
 
         #region --- Properties ---
@@ -75,11 +70,10 @@ namespace HW_ProfileBook.ViewModels
 
         private void ExecuteNavigateToMainList()
         {
-            //_settingsManager.Id = _authentication.GetUserId(_userLogin, _userPassword);
-            _settingsManager.Id = _repository.GetId<User>(_userLogin, _userPassword);
+            _settingsManager.Id = _authentication.GetUserId(_userLogin, _userPassword);
             if (_autorithation.IsAutorized())
             {
-                NavigationService.NavigateAsync("/NavigationPage/MainList");
+                NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainList)}");
             }
             else
             {
@@ -99,6 +93,7 @@ namespace HW_ProfileBook.ViewModels
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
+            _userLogin = parameters.GetValue<string>(nameof(SignUp));
             UserPassword = EntryHelper.ResetEntry();
         }
 

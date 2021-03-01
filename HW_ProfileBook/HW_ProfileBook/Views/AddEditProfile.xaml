@@ -22,7 +22,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Image Grid.Row="0" Source="pic_profile.png" />
+        <Image Grid.Row="0" Source="pic_profile.png">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ChangeImage}" />
+            </Image.GestureRecognizers>
+        </Image>
 
         <Entry
             Grid.Row="1"

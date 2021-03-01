@@ -61,13 +61,13 @@ namespace HW_ProfileBook.ViewModels
 
 
         private DelegateCommand _settings;
-        public DelegateCommand Settings =>
+        public DelegateCommand SettingsCommand =>
 
             _settings ?? (_settings = new DelegateCommand(ExecuteSettings));
 
         void ExecuteSettings()
         {
-            NavigationService.NavigateAsync("Settings");
+            
         }
 
         private DelegateCommand<object> _navigateToAddEditProfile;
@@ -106,7 +106,7 @@ namespace HW_ProfileBook.ViewModels
         private void ExecuteLogout()
         {
             _autorithation.LogOut();
-            NavigationService.NavigateAsync("/NavigationPage/SignIn");
+            NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
         }
 
         #endregion
@@ -120,7 +120,7 @@ namespace HW_ProfileBook.ViewModels
 
         public override void Initialize(INavigationParameters parameters)
         {
-            Profiles = _repository.GetItems<Profile>().Where(x => x.UserId == _settingsManager.Id);
+            //Profiles = _repository.GetItems<Profile>().Where(x => x.UserId == _settingsManager.Id);
         }
 
         #endregion

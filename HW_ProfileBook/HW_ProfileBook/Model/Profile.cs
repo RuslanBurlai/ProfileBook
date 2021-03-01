@@ -16,6 +16,7 @@ namespace HW_ProfileBook.Model
         public string NickNameLabel { get; set; }
         public string NameLabel { get; set; }
         public DateTime DateLabel { get; set; }
+        [MaxLength(120)]
         public string Description { get; set; }
 
         public int UserId { get; set; }
