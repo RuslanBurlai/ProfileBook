@@ -5,26 +5,27 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
     prism:DialogLayout.CloseOnBackgroundTapped="True"
-    prism:DialogLayout.RelativeHeightRequest="0.5"
+    prism:DialogLayout.RelativeHeightRequest="0.3"
     prism:DialogLayout.RelativeWidthRequest="0.75"
     prism:ViewModelLocator.AutowireViewModel="True"
     CornerRadius="20"
     HasShadow="false">
 
-    <StackLayout
+    <Grid
         HorizontalOptions="Center"
-        Orientation="Vertical"
+        RowDefinitions="40, 40"
         VerticalOptions="Center">
 
-        <Label Text="Pick at gallery " />
-        <Label Text="Take phota with camera" />
-        <Button
-            BackgroundColor="Yellow"
-            Command="{Binding CloseCommand}"
-            HorizontalOptions="FillAndExpand"
-            Text="Close"
-            TextColor="White" />
+        <Grid Grid.Row="0" ColumnDefinitions="0.3*, *">
+            <Image Source="pic_profile" />
+            <Button Grid.Column="1" Text="Pick at gelarry" />
+        </Grid>
 
-    </StackLayout>
+        <Grid Grid.Row="1" ColumnDefinitions="0.3*, *">
+            <Image Source="pic_profile" />
+            <Button Grid.Column="1" Text="Take photo with camera" />
+        </Grid>
+
+    </Grid>
 
 </Frame>
