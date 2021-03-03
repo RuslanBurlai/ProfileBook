@@ -17,12 +17,12 @@
         VerticalOptions="Center">
 
         <Grid Grid.Row="0" ColumnDefinitions="0.3*, *">
-            <Image Source="pic_profile" />
+            <Image Source="ic_collections" />
             <Button Grid.Column="1" Text="Pick at gelarry" />
         </Grid>
 
         <Grid Grid.Row="1" ColumnDefinitions="0.3*, *">
-            <Image Source="pic_profile" />
+            <Image Source="ic_camera_alt" />
             <Button Grid.Column="1" Text="Take photo with camera" />
         </Grid>
 
