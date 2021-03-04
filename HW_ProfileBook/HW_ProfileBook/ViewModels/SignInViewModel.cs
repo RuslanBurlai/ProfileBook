@@ -33,7 +33,7 @@ namespace HW_ProfileBook.ViewModels
             _authentication = authentication;
         }
 
-        #region --- Properties ---
+        #region --- Public Properties ---
 
         private string _userLogin;
         public string UserLogin

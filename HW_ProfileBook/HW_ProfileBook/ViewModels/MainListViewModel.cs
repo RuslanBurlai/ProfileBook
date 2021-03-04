@@ -65,11 +65,6 @@ namespace HW_ProfileBook.ViewModels
 
             _settings ?? (_settings = new DelegateCommand(ExecuteSettings));
 
-        void ExecuteSettings()
-        {
-            
-        }
-
         private DelegateCommand<object> _navigateToAddEditProfile;
         public DelegateCommand<object> NavigateToAddEditProfile =>
             _navigateToAddEditProfile ?? (_navigateToAddEditProfile = new DelegateCommand<object>(ExecuteNavigateToAddEditProfile));
@@ -82,31 +77,37 @@ namespace HW_ProfileBook.ViewModels
         public DelegateCommand<object> EditProfile =>
             _editProfile ?? (_editProfile = new DelegateCommand<object>(ExecuteEditProfile));
 
-        void ExecuteEditProfile(object parameter)
+        #endregion
+
+        #region --- Private Helpers ---
+
+        private void ExecuteSettings()
+        {
+
+        }
+
+        private void ExecuteNavigateToAddEditProfile(object parameter)
+        {
+            NavigationService.NavigateAsync(nameof(AddEditProfile));
+        }
+
+        private void ExecuteEditProfile(object parameter)
         {
             var selectedProfile = new NavigationParameters();
             selectedProfile.Add("p", parameter);
             NavigationService.NavigateAsync(nameof(AddEditProfile), selectedProfile);
-        }
-        private void ExecuteDeleteProfile(object parameter)
-        {
-            Profile selectedProfile = (Profile)parameter;
-            _repository.DeleteItem<Profile>(selectedProfile);
-            Profiles = _repository.GetItems<Profile>();
-        }
-
-        #endregion
-
-        #region --- Private Helpers ---
-        private void ExecuteNavigateToAddEditProfile(object parameter)
-        {
-            NavigationService.NavigateAsync(nameof(AddEditProfile));
         }
 
         private void ExecuteLogout()
         {
             _autorithation.LogOut();
             NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
+        }
+
+        private void ExecuteDeleteProfile(object parameter)
+        {
+            _repository.DeleteItem<Profile>(parameter as Profile);
+            Profiles = _repository.GetItems<Profile>();
         }
 
         #endregion

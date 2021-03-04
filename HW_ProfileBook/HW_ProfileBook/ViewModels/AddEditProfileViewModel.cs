@@ -29,7 +29,7 @@ namespace HW_ProfileBook.ViewModels
             _dialogService = dialogService;
         }
 
-        #region --- Property ---
+        #region --- Public Property ---
 
         private Profile _profile;
 
@@ -73,28 +73,25 @@ namespace HW_ProfileBook.ViewModels
         public DelegateCommand ChangeImage =>
             _changeImage ?? (_changeImage = new DelegateCommand(ExecuteChangeImage));
 
-        void ExecuteChangeImage()
-        {
-            _dialogService.ShowDialog(nameof(SelectImage));
-        }
-
         #endregion
 
         #region --- Private Helpers ---
 
+        private void ExecuteChangeImage()
+        {
+            _dialogService.ShowDialog(nameof(SelectImage), OnDialogClosed);
+        }
+
+        private void OnDialogClosed(IDialogResult result)
+        {
+            if (result.Parameters.ContainsKey(nameof(SelectImage)))
+                ProfileImage = result.Parameters.GetValue<string>(nameof(SelectImage));
+        }
+
         private void ExecuteSaveProfile()
         {
-            if(_profile == null)
-            {
-                var newProfile = CreateProfile(_settingsManager.Id, _name, _nickName, _description, _profileImage);
-
-                _repository.AddItem<Profile>(newProfile);
-            }  
-            else
-            {
-                var updateProfile = CreateProfile(_settingsManager.Id, _name, _nickName, _description, _profileImage);
-                _repository.AddItem(updateProfile);
-            }
+            var newProfile = CreateProfile(_profile);
+            _repository.AddItem<Profile>(newProfile);
             NavigationService.GoBackAsync(null, false, false);
         }
 
@@ -103,28 +100,29 @@ namespace HW_ProfileBook.ViewModels
             return EntryHelper.EntryIsEmpty(_name, _nickName, _description);
         }
 
-        private Profile CreateProfile(int userId, string name, string nickName, string description, string profImage)
+
+        private Profile CreateProfile(Profile profile)
         {
-            if(_profile == null)
+            if (profile == null)
             {
-                var _profile = new Profile
+                profile = new Profile
                 {
-                    //ProfileImage = ""
-                    UserId = userId,
-                    NickNameLabel = nickName,
-                    NameLabel = name,
+                    ProfileImage = _profileImage,
+                    NickNameLabel = _nickName,
+                    NameLabel = _name,
+                    Description = _description,
                     DateLabel = DateTime.Now,
-                    Description = description
+                    UserId = _settingsManager.Id
                 };
             }
             else
             {
-                _profile.NickNameLabel = NickName;
-                _profile.NameLabel = Name;
-                _profile.Description = Description;
-                _profile.ProfileImage = ProfileImage;
+                profile.ProfileImage = _profileImage;
+                profile.NickNameLabel = _nickName;
+                profile.NameLabel = _name;
+                profile.Description = _description; 
             }
-            return _profile;
+                return profile;
         }
 
         #endregion
@@ -133,15 +131,16 @@ namespace HW_ProfileBook.ViewModels
 
         public override void Initialize(INavigationParameters parameters)
         {
-            var selectedProfile = parameters.GetValue<Profile>("p");
-            if (selectedProfile != null)
+            _profile = parameters.GetValue<Profile>("p");
+            if (_profile != null)
             {
-                _profile = selectedProfile;
+                ProfileImage = _profile.ProfileImage;
                 Name = _profile.NameLabel;
                 NickName = _profile.NameLabel;
                 Description = _profile.Description;
-                ProfileImage = _profile.ProfileImage;
             }
+            else
+                ProfileImage = "pic_profile";
         }
 
         #endregion

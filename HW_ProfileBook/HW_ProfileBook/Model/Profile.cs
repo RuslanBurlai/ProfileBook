@@ -12,7 +12,7 @@ namespace HW_ProfileBook.Model
         [PrimaryKey, AutoIncrement, Column("id")]
         public int Id { get; set; }
 
-        public string ProfileImage { get; set; } = "pic_profile.png";
+        public string ProfileImage { get; set; }
         public string NickNameLabel { get; set; }
         public string NameLabel { get; set; }
         public DateTime DateLabel { get; set; }

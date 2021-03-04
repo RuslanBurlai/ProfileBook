@@ -18,12 +18,18 @@
 
         <Grid Grid.Row="0" ColumnDefinitions="0.3*, *">
             <Image Source="ic_collections" />
-            <Button Grid.Column="1" Text="Pick at gelarry" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding PickAtGelarry}"
+                Text="Pick at gelarry" />
         </Grid>
 
         <Grid Grid.Row="1" ColumnDefinitions="0.3*, *">
             <Image Source="ic_camera_alt" />
-            <Button Grid.Column="1" Text="Take photo with camera" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding PickWithCamera}"
+                Text="Take photo with camera" />
         </Grid>
 
     </Grid>
