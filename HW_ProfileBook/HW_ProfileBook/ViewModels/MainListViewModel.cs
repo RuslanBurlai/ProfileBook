@@ -83,7 +83,7 @@ namespace HW_ProfileBook.ViewModels
 
         private void ExecuteSettings()
         {
-
+            NavigationService.NavigateAsync(nameof(Settings)); 
         }
 
         private void ExecuteNavigateToAddEditProfile(object parameter)

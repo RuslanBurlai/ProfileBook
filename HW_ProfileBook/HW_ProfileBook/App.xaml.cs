@@ -54,6 +54,7 @@ namespace HW_ProfileBook
 
             //Dialogs
             containerRegistry.RegisterDialog<SelectImage, SelectImageViewModel>();
+            containerRegistry.RegisterForNavigation<Settings, SettingsViewModel>();
         }
     }
 }

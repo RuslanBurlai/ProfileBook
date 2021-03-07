@@ -2,7 +2,6 @@
 using Plugin.Media.Abstractions;
 using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Navigation;
 using Prism.Services.Dialogs;
 using System;
 
@@ -10,11 +9,6 @@ namespace HW_ProfileBook.Dialogs
 {
     public class SelectImageViewModel : BindableBase, IDialogAware
     {
-        private string _ia;
-        public SelectImageViewModel()
-        {
-        }
-
         #region --- Public Properties---
 
         private DelegateCommand _pickItGalarry;
@@ -31,8 +25,6 @@ namespace HW_ProfileBook.Dialogs
 
         private async void ExecutePickWithCamera()
         {
-            await CrossMedia.Current.Initialize();
-
             if (CrossMedia.Current.IsTakePhotoSupported && CrossMedia.Current.IsCameraAvailable)
             {
                 var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
@@ -41,6 +33,7 @@ namespace HW_ProfileBook.Dialogs
                 });
                 if (file == null)
                 {
+                    return;
                 }
                 RequestClose(new DialogParameters { { nameof(SelectImage), file.Path } });
             }
@@ -54,6 +47,9 @@ namespace HW_ProfileBook.Dialogs
 
         #endregion
 
+
+        #region --- Implement IDialogAware ---
+
         public event Action<IDialogParameters> RequestClose;
 
         public bool CanCloseDialog() => true;
@@ -64,7 +60,8 @@ namespace HW_ProfileBook.Dialogs
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-
         }
+
+        #endregion
     }
 }
