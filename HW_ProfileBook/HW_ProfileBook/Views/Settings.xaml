@@ -9,7 +9,7 @@
 
     <StackLayout>
         <Frame>
-            <Grid>
+            <Grid RadioButtonGroup.GroupName="Sort" RadioButtonGroup.SelectedValue="{Binding SelectedValue}">
                 <Label
                     Grid.Row="0"
                     FontSize="Large"
@@ -17,9 +17,18 @@
                     Text="Sort by"
                     VerticalOptions="Center" />
 
-                <RadioButton Grid.Row="1" Content="Name" />
-                <RadioButton Grid.Row="2" Content="NickName" />
-                <RadioButton Grid.Row="3" Content="Date" />
+                <RadioButton
+                    Grid.Row="1"
+                    Content="Name"
+                    Value="Name" />
+                <RadioButton
+                    Grid.Row="2"
+                    Content="NickName"
+                    Value="NickName" />
+                <RadioButton
+                    Grid.Row="3"
+                    Content="Date"
+                    Value="Date" />
             </Grid>
         </Frame>
         <Frame>

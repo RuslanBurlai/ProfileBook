@@ -18,16 +18,19 @@ namespace HW_ProfileBook.ViewModels
     {
         private IAutorithation _autorithation;
         private IProfileDataBase _profileDataBase;
+        private IProfileSort _profileSort;
 
         public MainListViewModel(
             INavigationService navigationService,
             IAutorithation autorithation,
-            IProfileDataBase profileDataBase) :
+            IProfileDataBase profileDataBase,
+            IProfileSort profileSort) :
             base(navigationService)
         {
             Title = "Main List";
             _autorithation = autorithation;
             _profileDataBase = profileDataBase;
+            _profileSort = profileSort;
         }
 
         #region --- Public Properties ---
@@ -100,7 +103,7 @@ namespace HW_ProfileBook.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            Profiles = _profileDataBase.GetProfiles();
+            Profiles = _profileSort.SortProfiles();
         }
 
         #endregion

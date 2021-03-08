@@ -21,19 +21,35 @@ namespace HW_ProfileBook.Services.ProfileService
             _repository = repository;
         }
 
-        public IEnumerable<Profile> SortProfilesByDate()
+        public IEnumerable<Profile> SortProfiles()
+        {
+            switch (_settingsManager.SortMethod)
+            {
+                case "Name": { return SortProfilesByName(); }
+                case "NickName": { return SortProfilesByNickName(); }
+                case "Data": { return SortProfilesByDate(); }
+                default: return _repository.GetItems<Profile>().Where(x => x.UserId == _settingsManager.Id);
+            }
+            
+        }
+
+        #region --- Private Helpers ---
+
+        private IEnumerable<Profile> SortProfilesByDate()
         {
             return _repository.GetItems<Profile>().Where(x => x.UserId == _settingsManager.Id).OrderBy(x => x.DateLabel);
         }
 
-        public IEnumerable<Profile> SortProfilesByName()
+        private IEnumerable<Profile> SortProfilesByName()
         {
             return _repository.GetItems<Profile>().Where(x => x.UserId == _settingsManager.Id).OrderBy(x => x.NameLabel);
         }
 
-        public IEnumerable<Profile> SortProfilesByNickName()
+        private IEnumerable<Profile> SortProfilesByNickName()
         {
             return _repository.GetItems<Profile>().Where(x => x.UserId == _settingsManager.Id).OrderBy(x => x.NickNameLabel);
         }
+
+        #endregion
     }
 }

@@ -7,5 +7,6 @@ namespace HW_ProfileBook.Services.Settings
     public interface ISettingsManager
     {
         int Id { get; set; }
+        string SortMethod { get; set; }
     }
 }

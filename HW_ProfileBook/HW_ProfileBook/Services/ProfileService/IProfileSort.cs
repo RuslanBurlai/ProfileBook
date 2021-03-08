@@ -7,8 +7,6 @@ namespace HW_ProfileBook.Services.ProfileService
 {
     public interface IProfileSort
     {
-        IEnumerable<Profile> SortProfilesByName();
-        IEnumerable<Profile> SortProfilesByNickName();
-        IEnumerable<Profile> SortProfilesByDate();
+        IEnumerable<Profile> SortProfiles();
     }
 }

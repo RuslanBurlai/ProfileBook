@@ -1,70 +1,37 @@
-﻿using HW_ProfileBook.Services.ProfileService;
-using Prism.Commands;
-using Prism.Mvvm;
+﻿using HW_ProfileBook.Services.Settings;
 using Prism.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 
 namespace HW_ProfileBook.ViewModels
 {
-    public class SettingsViewModel : ViewModelBase
+    public class SettingsViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        private IProfileSort _profileSort;
+        private ISettingsManager _settingsManager;
         public SettingsViewModel(
             INavigationService navigationService,
-            IProfileSort profileSort) 
-            : base(navigationService)
+            ISettingsManager settingsManager) :
+            base(navigationService)
         {
-            Title = "Settings";
-            _profileSort = profileSort;
+            _settingsManager = settingsManager;
         }
 
         #region --- Public Properties ---
 
-        private string GroupName;
-        public string _groupName
+        private object _selectedValue;
+        public object SelectedValue
         {
-            get { return GroupName; }
-            set { SetProperty(ref GroupName, value); }
+            get { return _selectedValue; }
+            set { SetProperty(ref _selectedValue, value); }
         }
-
-        private object _selection;
-        public object Selection
-        {
-            get { return _selection; }
-            set { SetProperty(ref _selection, value); }
-        }
-        private DelegateCommand _sortByName;
-        public DelegateCommand SortByName =>
-            _sortByName ?? (_sortByName = new DelegateCommand(ExecuteSortByName)
-            .ObservesProperty(() => _groupName));
-
-        private DelegateCommand _sortByNickName;
-        public DelegateCommand SortByNickName =>
-            _sortByNickName ?? (_sortByNickName = new DelegateCommand(ExecuteSortByNickName));
-
-        private DelegateCommand _sortByDate;
-        public DelegateCommand SortByDate =>
-            _sortByDate ?? (_sortByDate = new DelegateCommand(ExecuteSortByDate));
-
 
         #endregion
 
-        #region --- Private Helpers ---
+        #region --- Overrides ---
 
-        private void ExecuteSortByName()
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
-            _profileSort.SortProfilesByName();
-        }
-
-        private void ExecuteSortByNickName()
-        {
-            
-        }
-        private void ExecuteSortByDate()
-        {
-            
+            _settingsManager.SortMethod = SelectedValue as String;
         }
 
         #endregion
