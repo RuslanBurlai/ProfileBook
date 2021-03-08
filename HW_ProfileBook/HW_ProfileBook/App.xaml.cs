@@ -11,6 +11,7 @@ using HW_ProfileBook.Services.Settings;
 using HW_ProfileBook.Services.Authentication;
 using HW_ProfileBook.Repository;
 using HW_ProfileBook.Dialogs;
+using HW_ProfileBook.Services.ProfileService;
 
 namespace HW_ProfileBook
 {
@@ -51,6 +52,8 @@ namespace HW_ProfileBook
             containerRegistry.RegisterInstance<IAutorithation>(Container.Resolve<Autorithation>());
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository.Repository>());
             containerRegistry.RegisterInstance<IAuthentication>(Container.Resolve<Authentication>());
+            containerRegistry.RegisterInstance<IProfileDataBase>(Container.Resolve<ProfileDataBase>());
+            containerRegistry.RegisterInstance<IProfileSort>(Container.Resolve<ProfileSort>());
 
             //Dialogs
             containerRegistry.RegisterDialog<SelectImage, SelectImageViewModel>();

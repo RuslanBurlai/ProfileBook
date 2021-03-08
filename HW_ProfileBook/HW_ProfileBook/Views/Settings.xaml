@@ -9,35 +9,17 @@
 
     <StackLayout>
         <Frame>
-            <Grid ColumnDefinitions="0.1*, *">
+            <Grid>
                 <Label
                     Grid.Row="0"
-                    Grid.ColumnSpan="2"
                     FontSize="Large"
                     HorizontalOptions="Start"
-                    Text="Sort"
+                    Text="Sort by"
                     VerticalOptions="Center" />
-                <RadioButton Grid.Row="1" Grid.Column="0" />
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    FontSize="Medium"
-                    Text="Name"
-                    VerticalOptions="Center" />
-                <RadioButton Grid.Row="2" />
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    FontSize="Medium"
-                    Text="NickName"
-                    VerticalOptions="Center" />
-                <RadioButton Grid.Row="3" />
-                <Label
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    FontSize="Medium"
-                    Text="Date"
-                    VerticalOptions="Center" />
+
+                <RadioButton Grid.Row="1" Content="Name" />
+                <RadioButton Grid.Row="2" Content="NickName" />
+                <RadioButton Grid.Row="3" Content="Date" />
             </Grid>
         </Frame>
         <Frame>
@@ -83,9 +65,7 @@
                     Grid.Column="1"
                     Text="Русский"
                     VerticalOptions="Center" />
-
             </Grid>
-
         </Frame>
     </StackLayout>
 </ContentPage>

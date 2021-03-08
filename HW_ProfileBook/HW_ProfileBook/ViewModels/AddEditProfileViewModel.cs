@@ -1,8 +1,11 @@
 ﻿using HW_ProfileBook.Dialogs;
 using HW_ProfileBook.Model;
 using HW_ProfileBook.Repository;
+using HW_ProfileBook.Services.Authentication;
+using HW_ProfileBook.Services.ProfileService;
 using HW_ProfileBook.Services.Settings;
 using HW_ProfileBook.Services.Validators;
+using HW_ProfileBook.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services.Dialogs;
@@ -12,26 +15,23 @@ namespace HW_ProfileBook.ViewModels
 {
     public class AddEditProfileViewModel : ViewModelBase
     {
-        private ISettingsManager _settingsManager;
-        private IRepository _repository;
         private IDialogService _dialogService;
+        private IProfileDataBase _profileDataBase;
 
         public AddEditProfileViewModel(
             INavigationService navigationService,
-            ISettingsManager settingsManager,
-            IRepository repository,
+            IProfileDataBase profileDataBase,
             IDialogService dialogService) :
             base(navigationService)
         {
             Title = "Add Profile";
-            _settingsManager = settingsManager;
-            _repository = repository;
+            _profileDataBase = profileDataBase;
             _dialogService = dialogService;
         }
 
-        #region --- Public Property ---
-
         private Profile _profile;
+
+        #region --- Public Property ---
 
         private string _profileImage;
         public string ProfileImage
@@ -91,7 +91,7 @@ namespace HW_ProfileBook.ViewModels
         private void ExecuteSaveProfile()
         {
             var newProfile = CreateProfile(_profile);
-            _repository.AddItem<Profile>(newProfile);
+            _profileDataBase.AddProfile(newProfile);
             NavigationService.GoBackAsync(null, false, false);
         }
 
@@ -112,7 +112,7 @@ namespace HW_ProfileBook.ViewModels
                     NameLabel = _name,
                     Description = _description,
                     DateLabel = DateTime.Now,
-                    UserId = _settingsManager.Id
+                    UserId = _profileDataBase.GetUserId()
                 };
             }
             else
@@ -131,7 +131,7 @@ namespace HW_ProfileBook.ViewModels
 
         public override void Initialize(INavigationParameters parameters)
         {
-            _profile = parameters.GetValue<Profile>("p");
+            _profile = parameters.GetValue<Profile>(nameof(AddEditProfile));
             if (_profile != null)
             {
                 ProfileImage = _profile.ProfileImage;
