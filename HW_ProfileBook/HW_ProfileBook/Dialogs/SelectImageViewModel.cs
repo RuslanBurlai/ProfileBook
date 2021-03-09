@@ -47,7 +47,6 @@ namespace HW_ProfileBook.Dialogs
 
         #endregion
 
-
         #region --- Implement IDialogAware ---
 
         public event Action<IDialogParameters> RequestClose;

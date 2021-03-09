@@ -1,4 +1,3 @@
-using HW_ProfileBook.Services.Validators;
 using HW_ProfileBook.Services.Autorization;
 using HW_ProfileBook.ViewModels;
 using HW_ProfileBook.Views;
@@ -12,27 +11,31 @@ using HW_ProfileBook.Services.Authentication;
 using HW_ProfileBook.Repository;
 using HW_ProfileBook.Dialogs;
 using HW_ProfileBook.Services.ProfileService;
+using HW_ProfileBook.Services.Theme;
 
 namespace HW_ProfileBook
 {
     public partial class App
     {
         private IAutorithation _autorithation => Container.Resolve<IAutorithation>();
+        private ILoadAppereance _loadAppereance => Container.Resolve<ILoadAppereance>();
+
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
         }
 
-        protected override async void OnInitialized()
+        protected async override void OnInitialized()
         {
             InitializeComponent();
-            if(_autorithation.IsAutorized())
-            { 
-                await NavigationService.NavigateAsync("NavigationPage/MainList");
+            _loadAppereance.SetAppTheme();
+            if (_autorithation.IsAutorized())
+            {
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(MainList)}");
             }
             else
             {
-                await NavigationService.NavigateAsync("NavigationPage/SignIn");
+                await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(SignIn)}");
             }
         }
 
@@ -54,6 +57,7 @@ namespace HW_ProfileBook
             containerRegistry.RegisterInstance<IAuthentication>(Container.Resolve<Authentication>());
             containerRegistry.RegisterInstance<IProfileDataBase>(Container.Resolve<ProfileDataBase>());
             containerRegistry.RegisterInstance<IProfileSort>(Container.Resolve<ProfileSort>());
+            containerRegistry.RegisterInstance<ILoadAppereance>(Container.Resolve<LoadAppereance>());
 
             //Dialogs
             containerRegistry.RegisterDialog<SelectImage, SelectImageViewModel>();

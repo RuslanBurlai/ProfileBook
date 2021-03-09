@@ -10,8 +10,12 @@ namespace HW_ProfileBook.Services.ProfileService
 {
     public class ProfileSort : IProfileSort
     {
+        #region --- Private Fields ---
+
         private readonly ISettingsManager _settingsManager;
         private readonly IRepository _repository;
+
+        #endregion
 
         public ProfileSort(
             ISettingsManager settingsManager,
@@ -27,7 +31,7 @@ namespace HW_ProfileBook.Services.ProfileService
             {
                 case "Name": { return SortProfilesByName(); }
                 case "NickName": { return SortProfilesByNickName(); }
-                case "Data": { return SortProfilesByDate(); }
+                case "Date": { return SortProfilesByDate(); }
                 default: return _repository.GetItems<Profile>().Where(x => x.UserId == _settingsManager.Id);
             }
             

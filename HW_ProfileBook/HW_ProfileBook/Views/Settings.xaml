@@ -5,10 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
     Title="{Binding Title}"
-    prism:ViewModelLocator.AutowireViewModel="True">
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource WindowBackgroundColor}">
 
     <StackLayout>
-        <Frame>
+        <Frame BackgroundColor="{DynamicResource FrameBackgroundColor}" BorderColor="{DynamicResource FrameBorderColor}">
             <Grid RadioButtonGroup.GroupName="Sort" RadioButtonGroup.SelectedValue="{Binding SelectedValue}">
                 <Label
                     Grid.Row="0"
@@ -20,18 +21,22 @@
                 <RadioButton
                     Grid.Row="1"
                     Content="Name"
+                    IsChecked="{Binding IsSortByName}"
                     Value="Name" />
                 <RadioButton
                     Grid.Row="2"
                     Content="NickName"
+                    IsChecked="{Binding IsSortByNickName}"
                     Value="NickName" />
                 <RadioButton
                     Grid.Row="3"
                     Content="Date"
+                    IsChecked="{Binding IsSortByDate}"
                     Value="Date" />
             </Grid>
         </Frame>
-        <Frame>
+        
+        <Frame BackgroundColor="{DynamicResource FrameBackgroundColor}" BorderColor="{DynamicResource FrameBorderColor}">
             <Grid ColumnDefinitions="0.5*, *">
 
                 <Label
@@ -47,11 +52,12 @@
                 <Switch
                     Grid.Row="1"
                     Grid.Column="1"
-                    HorizontalOptions="End" />
+                    HorizontalOptions="End"
+                    IsToggled="{Binding IsDarkTheme}" />
             </Grid>
         </Frame>
 
-        <Frame>
+        <Frame BackgroundColor="{DynamicResource FrameBackgroundColor}" BorderColor="{DynamicResource FrameBorderColor}">
 
             <Grid ColumnDefinitions="0.1*, *">
 

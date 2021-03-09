@@ -29,7 +29,11 @@ namespace HW_ProfileBook.ViewModels
             _dialogService = dialogService;
         }
 
+        #region --- Private Fields ---
+
         private Profile _profile;
+
+        #endregion
 
         #region --- Public Property ---
 
@@ -136,7 +140,7 @@ namespace HW_ProfileBook.ViewModels
             {
                 ProfileImage = _profile.ProfileImage;
                 Name = _profile.NameLabel;
-                NickName = _profile.NameLabel;
+                NickName = _profile.NickNameLabel;
                 Description = _profile.Description;
             }
             else
