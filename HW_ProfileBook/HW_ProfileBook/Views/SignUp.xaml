@@ -4,7 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
-    Title="{Binding Title}"
+    xmlns:resources="clr-namespace:HW_ProfileBook.Resource"
+    Title="{x:Static resources:Resource.User_SignUp}"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource WindowBackgroundColor}">
     <Grid>
@@ -19,21 +20,21 @@
 
             <Entry
                 BackgroundColor="{DynamicResource EntryBackgroundColor}"
-                Placeholder="Login"
+                Placeholder="{x:Static resources:Resource.Login}"
                 Text="{Binding UserLogin}"
                 TextColor="{DynamicResource EntryTextColor}" />
 
             <Entry
                 BackgroundColor="{DynamicResource EntryBackgroundColor}"
                 IsPassword="True"
-                Placeholder="Password"
+                Placeholder="{x:Static resources:Resource.Password}"
                 Text="{Binding UserPassword}"
                 TextColor="{DynamicResource EntryTextColor}" />
 
             <Entry
                 BackgroundColor="{DynamicResource EntryBackgroundColor}"
                 IsPassword="True"
-                Placeholder="Confirm password"
+                Placeholder="{x:Static resources:Resource.Confirm_password}"
                 Text="{Binding ConfirmUserPassword}"
                 TextColor="{DynamicResource EntryTextColor}" />
         </StackLayout>
@@ -46,7 +47,7 @@
                 Command="{Binding NavigateToSignInView}"
                 CommandParameter="{Binding UserLogin}"
                 CornerRadius="10"
-                Text="Sign up" />
+                Text="{x:Static resources:Resource.SignUp}" />
         </StackLayout>
     </Grid>
 </ContentPage>

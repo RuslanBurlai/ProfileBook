@@ -24,5 +24,11 @@ namespace HW_ProfileBook.Services.Settings
             get => Preferences.Get(nameof(Appearance), nameof(LightTheme));
             set => Preferences.Set(nameof(Appearance), value);
         }
+
+        public string Language
+        {
+            get => Preferences.Get(nameof(Language), "en");
+            set => Preferences.Set(nameof(Language), value);
+        }
     }
 }

@@ -4,7 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
-    Title="{Binding Title}"
+    xmlns:resource="clr-namespace:HW_ProfileBook.Resource"
+    Title="{x:Static resource:Resource.Settings}"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource WindowBackgroundColor}">
 
@@ -15,40 +16,40 @@
                     Grid.Row="0"
                     FontSize="Large"
                     HorizontalOptions="Start"
-                    Text="Sort by"
+                    Text="{x:Static resource:Resource.Sort_by}"
                     VerticalOptions="Center" />
 
                 <RadioButton
                     Grid.Row="1"
-                    Content="Name"
+                    Content="{x:Static resource:Resource.Name}"
                     IsChecked="{Binding IsSortByName}"
                     Value="Name" />
                 <RadioButton
                     Grid.Row="2"
-                    Content="NickName"
+                    Content="{x:Static resource:Resource.Nick_name}"
                     IsChecked="{Binding IsSortByNickName}"
                     Value="NickName" />
                 <RadioButton
                     Grid.Row="3"
-                    Content="Date"
+                    Content="{x:Static resource:Resource.Date}"
                     IsChecked="{Binding IsSortByDate}"
                     Value="Date" />
             </Grid>
         </Frame>
-        
+
         <Frame BackgroundColor="{DynamicResource FrameBackgroundColor}" BorderColor="{DynamicResource FrameBorderColor}">
             <Grid ColumnDefinitions="0.5*, *">
 
                 <Label
                     Grid.ColumnSpan="2"
                     FontSize="Large"
-                    Text="Theme" />
+                    Text="{x:Static resource:Resource.Theme}" />
 
                 <Label
                     Grid.Row="1"
                     Grid.Column="0"
                     FontSize="Medium"
-                    Text="Dark theme" />
+                    Text="{x:Static resource:Resource.Dark_theme}" />
                 <Switch
                     Grid.Row="1"
                     Grid.Column="1"
@@ -64,21 +65,21 @@
                 <Label
                     Grid.ColumnSpan="2"
                     FontSize="Large"
-                    Text="Language"
+                    Text="{x:Static resource:Resource.Language}"
                     VerticalOptions="Center" />
 
-                <CheckBox Grid.Row="1" />
+                <CheckBox Grid.Row="1" IsChecked="{Binding IsEnLanguage}" />
                 <Label
                     Grid.Row="1"
                     Grid.Column="1"
-                    Text="English"
+                    Text="{x:Static resource:Resource.English}"
                     VerticalOptions="Center" />
 
-                <CheckBox Grid.Row="2" />
+                <CheckBox Grid.Row="2" IsChecked="{Binding IsRuLanguage}" />
                 <Label
                     Grid.Row="2"
                     Grid.Column="1"
-                    Text="Русский"
+                    Text="{x:Static resource:Resource.Russian}"
                     VerticalOptions="Center" />
             </Grid>
         </Frame>

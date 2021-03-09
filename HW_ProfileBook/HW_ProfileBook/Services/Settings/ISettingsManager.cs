@@ -10,5 +10,6 @@ namespace HW_ProfileBook.Services.Settings
         int Id { get; set; }
         string SortMethod { get; set; }
         string Appearance { get; set; }
+        string Language { get; set; }
     }
 }

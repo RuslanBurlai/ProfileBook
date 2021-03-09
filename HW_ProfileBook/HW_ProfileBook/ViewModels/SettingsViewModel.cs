@@ -1,9 +1,10 @@
-﻿using HW_ProfileBook.Services.Settings;
+﻿using HW_ProfileBook.Services.Localize;
+using HW_ProfileBook.Services.Settings;
+using HW_ProfileBook.Services.Theme;
 using HW_ProfileBook.Styles;
 using Prism.Navigation;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace HW_ProfileBook.ViewModels
@@ -11,13 +12,20 @@ namespace HW_ProfileBook.ViewModels
     public class SettingsViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private ISettingsManager _settingsManager;
+        private ILocalize _localize;
+        private ILoadAppereance _loadAppereance;
+
         public SettingsViewModel(
             INavigationService navigationService,
-            ISettingsManager settingsManager) :
+            ISettingsManager settingsManager,
+            ILocalize localize,
+            ILoadAppereance loadAppereance) :
             base(navigationService)
         {
             Title = "Settings";
             _settingsManager = settingsManager;
+            _localize = localize;
+            _loadAppereance = loadAppereance;
         }
 
         #region --- Public Properties ---
@@ -61,6 +69,20 @@ namespace HW_ProfileBook.ViewModels
             set { SetProperty(ref _isDarkTheme, value); }
         }
 
+
+        private bool _isRuLanguageName;
+        public bool IsRuLanguage
+        {
+            get { return _isRuLanguageName; }
+            set { SetProperty(ref _isRuLanguageName, value); }
+        }
+
+        private bool _isEnLanguage;
+        public bool IsEnLanguage
+        {
+            get { return _isEnLanguage; }
+            set { SetProperty(ref _isEnLanguage, value); }
+        }
         #endregion
 
         #region --- Overrides ---
@@ -88,6 +110,11 @@ namespace HW_ProfileBook.ViewModels
                         }
                         break;
                     }
+
+                case nameof(IsRuLanguage):
+                    { /*Resource.Resource.Culture =*/ _localize.GetCurrentCultureInfo("ru"); } break;
+                case nameof(IsEnLanguage):
+                    { /*Resource.Resource.Culture =*/  _localize.GetCurrentCultureInfo("en"); } break;
             }
         }
 

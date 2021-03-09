@@ -12,6 +12,7 @@ using HW_ProfileBook.Repository;
 using HW_ProfileBook.Dialogs;
 using HW_ProfileBook.Services.ProfileService;
 using HW_ProfileBook.Services.Theme;
+using HW_ProfileBook.Services.Localize;
 
 namespace HW_ProfileBook
 {
@@ -58,6 +59,7 @@ namespace HW_ProfileBook
             containerRegistry.RegisterInstance<IProfileDataBase>(Container.Resolve<ProfileDataBase>());
             containerRegistry.RegisterInstance<IProfileSort>(Container.Resolve<ProfileSort>());
             containerRegistry.RegisterInstance<ILoadAppereance>(Container.Resolve<LoadAppereance>());
+            containerRegistry.RegisterInstance<ILocalize>(Container.Resolve<Localize>());
 
             //Dialogs
             containerRegistry.RegisterDialog<SelectImage, SelectImageViewModel>();
