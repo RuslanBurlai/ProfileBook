@@ -68,7 +68,7 @@ namespace HW_ProfileBook.ViewModels
             return EntryHelper.EntryIsEmpty(_userLogin, _userPassword, _confirmUserPassword);
         }
 
-        private void ExecuteNavigateToSignInView(string parameter)
+        private async void ExecuteNavigateToSignInView(string parameter)
         {
             if (Validator.LoginValid(_userLogin))
             {
@@ -87,21 +87,21 @@ namespace HW_ProfileBook.ViewModels
                         {
                             { nameof(SignUp), parameter }
                         };
-                        NavigationService.NavigateAsync($"{nameof(SignIn)}", login);
+                        await NavigationService.NavigateAsync($"{nameof(SignIn)}", login);
                     }
                     else
                     {
-                        _pageDialogService.DisplayAlertAsync("Login error", "This login already taken.", "ok");
+                        await _pageDialogService.DisplayAlertAsync("Login error", "This login already taken.", "ok");
                     }
                 }
                 else
                 {
-                    _pageDialogService.DisplayAlertAsync("Password is not valid", Validator.GetError, "ok");
+                    await _pageDialogService.DisplayAlertAsync("Password is not valid", Validator.GetError, "ok");
                 }
             }
             else
             {
-                _pageDialogService.DisplayAlertAsync("Login is not valid", "Login should not start with numbers.", "ok");
+                await _pageDialogService.DisplayAlertAsync("Login is not valid", "Login should not start with numbers.", "ok");
             }
         }
 

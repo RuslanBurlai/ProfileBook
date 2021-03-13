@@ -4,10 +4,12 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
+    xmlns:resources="clr-namespace:HW_ProfileBook.Resource"
     prism:DialogLayout.CloseOnBackgroundTapped="True"
     prism:DialogLayout.RelativeHeightRequest="0.3"
     prism:DialogLayout.RelativeWidthRequest="0.75"
     prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource WindowBackgroundColor}"
     CornerRadius="20"
     HasShadow="false">
 
@@ -21,7 +23,7 @@
             <Button
                 Grid.Column="1"
                 Command="{Binding PickAtGelarry}"
-                Text="Pick at gelarry" />
+                Text="{x:Static resources:Resource.Pick_at_gelarry}" />
         </Grid>
 
         <Grid Grid.Row="1" ColumnDefinitions="0.3*, *">
@@ -29,7 +31,7 @@
             <Button
                 Grid.Column="1"
                 Command="{Binding PickWithCamera}"
-                Text="Take photo with camera" />
+                Text="{x:Static resources:Resource.Take_photo_with_camera}" />
         </Grid>
 
     </Grid>

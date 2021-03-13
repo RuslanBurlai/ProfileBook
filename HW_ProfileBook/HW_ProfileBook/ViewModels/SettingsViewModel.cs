@@ -41,15 +41,13 @@ namespace HW_ProfileBook.ViewModels
         public bool IsSortByName
         {
             get { return _settingsManager.SortMethod == "Name"; }
-            // get { return _isSortByName; }
             set { SetProperty(ref _isSortByName, value); }
         }
 
         private bool _isSortByNickName;
         public bool IsSortByNickName
         {
-            get { return _settingsManager.SortMethod == "Nickname"; }
-            // get { return _isSortByNickName; }
+            get { return _settingsManager.SortMethod == "NickName"; }
             set { SetProperty(ref _isSortByNickName, value); }
         }
 
@@ -57,7 +55,6 @@ namespace HW_ProfileBook.ViewModels
         public bool IsSortByDate
         {
             get { return _settingsManager.SortMethod == "Date"; }
-            //get { return _isSortByDate; }
             set { SetProperty(ref _isSortByDate, value); }
         }
 
@@ -65,7 +62,6 @@ namespace HW_ProfileBook.ViewModels
         public bool IsDarkTheme
         {
             get { return _settingsManager.Appearance == (nameof(DarkTheme)); }
-            //get { return _isDarkTheme; }
             set { SetProperty(ref _isDarkTheme, value); }
         }
 
@@ -73,14 +69,14 @@ namespace HW_ProfileBook.ViewModels
         private bool _isRuLanguageName;
         public bool IsRuLanguage
         {
-            get { return _isRuLanguageName; }
+            get { return _settingsManager.Language == "ru"; }
             set { SetProperty(ref _isRuLanguageName, value); }
         }
 
         private bool _isEnLanguage;
         public bool IsEnLanguage
         {
-            get { return _isEnLanguage; }
+            get { return _settingsManager.Language == "en"; }
             set { SetProperty(ref _isEnLanguage, value); }
         }
         #endregion
@@ -112,9 +108,11 @@ namespace HW_ProfileBook.ViewModels
                     }
 
                 case nameof(IsRuLanguage):
-                    { /*Resource.Resource.Culture =*/ _localize.GetCurrentCultureInfo("ru"); } break;
+                    { _localize.SetCurrentCultureInfo("ru"); }
+                    break;
                 case nameof(IsEnLanguage):
-                    { /*Resource.Resource.Culture =*/  _localize.GetCurrentCultureInfo("en"); } break;
+                    { _localize.SetCurrentCultureInfo("en"); }
+                    break;
             }
         }
 

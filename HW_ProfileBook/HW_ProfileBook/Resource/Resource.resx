@@ -159,6 +159,9 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Pick at gelarry" xml:space="preserve">
+    <value>Pick at gelarry</value>
+  </data>
   <data name="Russian" xml:space="preserve">
     <value>Russian</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="Sort by" xml:space="preserve">
     <value>Sort by</value>
+  </data>
+  <data name="Take photo with camera" xml:space="preserve">
+    <value>Take photo with camera</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>

@@ -68,19 +68,46 @@
                     Text="{x:Static resource:Resource.Language}"
                     VerticalOptions="Center" />
 
-                <CheckBox Grid.Row="1" IsChecked="{Binding IsEnLanguage}" />
+                <CheckBox
+                    x:Name="enLang"
+                    Grid.Row="1"
+                    IsChecked="{Binding IsEnLanguage}">
+                    <CheckBox.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference ruLang}, Path=IsChecked}"
+                            TargetType="CheckBox"
+                            Value="true">
+                            <Setter Property="IsChecked" Value="False" />
+                        </DataTrigger>
+                    </CheckBox.Triggers>
+                </CheckBox>
+
                 <Label
                     Grid.Row="1"
                     Grid.Column="1"
                     Text="{x:Static resource:Resource.English}"
                     VerticalOptions="Center" />
 
-                <CheckBox Grid.Row="2" IsChecked="{Binding IsRuLanguage}" />
+                <CheckBox
+                    x:Name="ruLang"
+                    Grid.Row="2"
+                    IsChecked="{Binding IsRuLanguage}">
+                    <CheckBox.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference enLang}, Path=IsChecked}"
+                            TargetType="CheckBox"
+                            Value="true">
+                            <Setter Property="IsChecked" Value="false" />
+                        </DataTrigger>
+                    </CheckBox.Triggers>
+                </CheckBox>
+
                 <Label
                     Grid.Row="2"
                     Grid.Column="1"
                     Text="{x:Static resource:Resource.Russian}"
                     VerticalOptions="Center" />
+
             </Grid>
         </Frame>
     </StackLayout>

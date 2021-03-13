@@ -68,27 +68,27 @@ namespace HW_ProfileBook.ViewModels
 
         #region --- Private Helpers ---
 
-        private void ExecuteSettings()
+        private async void ExecuteSettings()
         {
-            NavigationService.NavigateAsync(nameof(Settings)); 
+            await NavigationService.NavigateAsync(nameof(Settings)); 
         }
 
-        private void ExecuteNavigateToAddEditProfile(object parameter)
+        private async void ExecuteNavigateToAddEditProfile(object parameter)
         {
-            NavigationService.NavigateAsync(nameof(AddEditProfile));
+            await NavigationService.NavigateAsync(nameof(AddEditProfile));
         }
 
-        private void ExecuteEditProfile(object parameter)
+        private async void ExecuteEditProfile(object parameter)
         {
             var selectedProfile = new NavigationParameters();
             selectedProfile.Add(nameof(AddEditProfile), parameter);
-            NavigationService.NavigateAsync(nameof(AddEditProfile), selectedProfile);
+            await NavigationService.NavigateAsync(nameof(AddEditProfile), selectedProfile);
         }
 
-        private void ExecuteLogout()
+        private async void ExecuteLogout()
         {
             _autorithation.LogOut();
-            NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignIn)}");
         }
 
         private void ExecuteDeleteProfile(object parameter)

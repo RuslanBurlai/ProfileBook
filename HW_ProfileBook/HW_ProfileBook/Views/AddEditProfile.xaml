@@ -6,7 +6,8 @@
     xmlns:prism="http://prismlibrary.com"
     xmlns:resource="clr-namespace:HW_ProfileBook.Resource"
     Title="{x:Static resource:Resource.Add_Profile}"
-    prism:ViewModelLocator.AutowireViewModel="True">
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource WindowBackgroundColor}">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem

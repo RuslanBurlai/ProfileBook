@@ -159,6 +159,9 @@
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
+  <data name="Pick at gelarry" xml:space="preserve">
+    <value>Выбрать из галереи</value>
+  </data>
   <data name="Russian" xml:space="preserve">
     <value>Русский</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="Sort by" xml:space="preserve">
     <value>Сортировать</value>
+  </data>
+  <data name="Take photo with camera" xml:space="preserve">
+    <value>Сделать фото</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Оформление</value>

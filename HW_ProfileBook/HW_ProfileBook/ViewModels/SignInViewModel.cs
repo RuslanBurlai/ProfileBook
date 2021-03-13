@@ -68,23 +68,23 @@ namespace HW_ProfileBook.ViewModels
             return EntryHelper.EntryIsEmpty(_userLogin, _userPassword);
         }
 
-        private void ExecuteNavigateToMainList()
+        private async void ExecuteNavigateToMainList()
         {
             _settingsManager.Id = _authentication.GetUserId(_userLogin, _userPassword);
             if (_autorithation.IsAutorized())
             {
-                NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainList)}");
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainList)}");
             }
             else
             {
-                _dialogService.DisplayAlertAsync("Error", "Invalid login or password!", "OK");
+                await _dialogService.DisplayAlertAsync("Error", "Invalid login or password!", "OK");
                 UserPassword = EntryHelper.ResetEntry();
             }
         }
 
-        private void ExecuteNavigateToSingUpView()
+        private async void ExecuteNavigateToSingUpView()
         {
-            NavigationService.NavigateAsync(nameof(SignUp));
+            await NavigationService.NavigateAsync(nameof(SignUp));
         }
 
         #endregion

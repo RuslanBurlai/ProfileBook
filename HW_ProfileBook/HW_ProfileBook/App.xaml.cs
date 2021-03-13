@@ -20,6 +20,7 @@ namespace HW_ProfileBook
     {
         private IAutorithation _autorithation => Container.Resolve<IAutorithation>();
         private ILoadAppereance _loadAppereance => Container.Resolve<ILoadAppereance>();
+        private ILocalize _localize => Container.Resolve<ILocalize>();
 
         public App(IPlatformInitializer initializer)
             : base(initializer)
@@ -29,6 +30,7 @@ namespace HW_ProfileBook
         protected async override void OnInitialized()
         {
             InitializeComponent();
+            _localize.GetCurrentCultureInfo();
             _loadAppereance.SetAppTheme();
             if (_autorithation.IsAutorized())
             {

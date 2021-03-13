@@ -25,6 +25,7 @@
             <StackLayout>
                 <ListView
                     x:Name="ListProfiles"
+                    BackgroundColor="Transparent"
                     ItemsSource="{Binding Profiles}"
                     RowHeight="70"
                     SelectedItem="{Binding SelectProfiles}">
@@ -41,7 +42,7 @@
                                         CommandParameter="{Binding .}"
                                         Text="{x:Static resource:Resource.Delete}" />
                                 </ViewCell.ContextActions>
-                                <StackLayout Orientation="Horizontal">
+                                <StackLayout BackgroundColor="{DynamicResource WindowBackgroundColor}" Orientation="Horizontal">
                                     <Image Source="{Binding ProfileImage}" />
                                     <StackLayout>
                                         <Label Text="{Binding NickNameLabel}" />

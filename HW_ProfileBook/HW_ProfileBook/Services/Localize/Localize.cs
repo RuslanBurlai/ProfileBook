@@ -1,4 +1,5 @@
 ﻿using HW_ProfileBook.Services.Settings;
+using System.Globalization;
 using System.Threading;
 
 namespace HW_ProfileBook.Services.Localize
@@ -12,22 +13,24 @@ namespace HW_ProfileBook.Services.Localize
             _settingManager = settingManager;
         }
 
-        public void GetCurrentCultureInfo(string language)
+        public void SetCurrentCultureInfo(string language)
         {
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language);
-            //AppResourse = language;
+            var prefLanguage = "en-US";
+            if (language != prefLanguage)
+            {
+                Resource.Resource.Culture = new CultureInfo(language);
+                _settingManager.Language = language;
+            }
+            else
+            {
+                Resource.Resource.Culture = new CultureInfo(prefLanguage);
+                _settingManager.Language = prefLanguage;
+            }
+        }
 
-            //var prefLanguage = "en-US";
-            //System.Globalization.CultureInfo choisenLang = null;
-            //try
-            //{
-            //    choisenLang = new System.Globalization.CultureInfo(language);
-            //}
-            //catch
-            //{
-            //    choisenLang = new System.Globalization.CultureInfo(prefLanguage);
-            //}
-
+        public void GetCurrentCultureInfo()
+        {
+            Resource.Resource.Culture = new CultureInfo(_settingManager.Language);
         }
     }
 }

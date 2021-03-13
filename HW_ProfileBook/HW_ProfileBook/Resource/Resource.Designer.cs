@@ -187,6 +187,15 @@ namespace HW_ProfileBook.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick at gelarry.
+        /// </summary>
+        internal static string Pick_at_gelarry {
+            get {
+                return ResourceManager.GetString("Pick at gelarry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Russian.
         /// </summary>
         internal static string Russian {
@@ -228,6 +237,15 @@ namespace HW_ProfileBook.Resource {
         internal static string Sort_by {
             get {
                 return ResourceManager.GetString("Sort by", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take photo with camera.
+        /// </summary>
+        internal static string Take_photo_with_camera {
+            get {
+                return ResourceManager.GetString("Take photo with camera", resourceCulture);
             }
         }
         

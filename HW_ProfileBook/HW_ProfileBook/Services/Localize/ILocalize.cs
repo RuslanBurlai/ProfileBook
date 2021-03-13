@@ -7,6 +7,7 @@ namespace HW_ProfileBook.Services.Localize
 {
     public interface ILocalize
     {
-        void GetCurrentCultureInfo(string language);
+        void SetCurrentCultureInfo(string language);
+        void GetCurrentCultureInfo();
     }
 }

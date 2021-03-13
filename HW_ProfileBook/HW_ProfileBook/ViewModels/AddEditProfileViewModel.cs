@@ -81,7 +81,7 @@ namespace HW_ProfileBook.ViewModels
 
         #region --- Private Helpers ---
 
-        private void ExecuteChangeImage()
+        private  void ExecuteChangeImage()
         {
             _dialogService.ShowDialog(nameof(SelectImage), OnDialogClosed);
         }
@@ -92,11 +92,11 @@ namespace HW_ProfileBook.ViewModels
                 ProfileImage = result.Parameters.GetValue<string>(nameof(SelectImage));
         }
 
-        private void ExecuteSaveProfile()
+        private async void ExecuteSaveProfile()
         {
             var newProfile = CreateProfile(_profile);
             _profileDataBase.AddProfile(newProfile);
-            NavigationService.GoBackAsync(null, false, false);
+            await NavigationService.GoBackAsync(null, false, false);
         }
 
         private bool CanExecuteSaveProfile()
