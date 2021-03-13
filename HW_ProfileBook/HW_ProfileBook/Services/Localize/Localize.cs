@@ -1,6 +1,8 @@
 ﻿using HW_ProfileBook.Services.Settings;
 using System.Globalization;
+using System.Resources;
 using System.Threading;
+using Xamarin.Forms;
 
 namespace HW_ProfileBook.Services.Localize
 {
@@ -15,17 +17,8 @@ namespace HW_ProfileBook.Services.Localize
 
         public void SetCurrentCultureInfo(string language)
         {
-            var prefLanguage = "en-US";
-            if (language != prefLanguage)
-            {
-                Resource.Resource.Culture = new CultureInfo(language);
-                _settingManager.Language = language;
-            }
-            else
-            {
-                Resource.Resource.Culture = new CultureInfo(prefLanguage);
-                _settingManager.Language = prefLanguage;
-            }
+            Resource.Resource.Culture = new CultureInfo(language);
+            _settingManager.Language = language;
         }
 
         public void GetCurrentCultureInfo()

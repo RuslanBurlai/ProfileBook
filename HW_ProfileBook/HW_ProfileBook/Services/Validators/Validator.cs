@@ -44,7 +44,7 @@ namespace HW_ProfileBook.Services.Validators
                 return false;
             }
 
-            return true; ;
+            return true;
         }
 
         #region --- Private Helpers ---

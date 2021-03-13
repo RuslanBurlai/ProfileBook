@@ -107,6 +107,4 @@ namespace HW_ProfileBook.ViewModels
 
         #endregion
     }
-
-    //"Password is not valid", "Password be at least 4 and no more than 16 and must contain at least one uppercase letter, one lowercase letter and one number."
 }

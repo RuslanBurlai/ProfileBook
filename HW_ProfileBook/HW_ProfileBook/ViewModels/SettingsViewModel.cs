@@ -107,11 +107,11 @@ namespace HW_ProfileBook.ViewModels
                     }
 
                 case nameof(IsRuLanguage):
-                    { _localize.SetCurrentCultureInfo("ru"); }
-                    break;
+                    { _localize.SetCurrentCultureInfo("ru"); break; }
+                   
                 case nameof(IsEnLanguage):
-                    { _localize.SetCurrentCultureInfo("en"); }
-                    break;
+                    { _localize.SetCurrentCultureInfo("en"); break; }
+                    
             }
         }
 
