@@ -8,33 +8,24 @@ namespace HW_ProfileBook.Services.Validators
 {
     public static class Validator
     {
+        #region --- Public Property ---
+
         public static string GetError { get; private set; }
+
+        #endregion
 
         public static bool PasswordValid(string password, string confirmPassword)
         {
-            if (password.Length < 4)
+            if (!password.Any(char.IsLower) 
+                || !password.Any(char.IsUpper) 
+                || !password.Any(char.IsDigit))
             {
-                GetError = "Login must be at least 4 characters.";
-                return false; 
-            }
-            if (password.Length > 16)
-            {
-                GetError = "Login must be more than 16 characters.";
+                GetError = GetErrorText(EntryErrors.PasswordNotValid);
                 return false;
             }
-            if (!password.Any(char.IsLetterOrDigit))
+            if (!password.Equals(confirmPassword, StringComparison.OrdinalIgnoreCase))
             {
-                GetError = "Password must contain at lowercase letter and number.";
-                return false;
-            }
-            if (!password.Any(char.IsUpper))
-            {
-                GetError = "Password must contain at uppercase letter";
-                return false;
-            }
-            if(!password.Equals(confirmPassword, StringComparison.OrdinalIgnoreCase))
-            {
-                GetError = "The values in the password and confirm password fields must match.";
+                GetError = GetErrorText(EntryErrors.PasswordDoesNotMatch);
                 return false;
             }
             return true;
@@ -42,7 +33,42 @@ namespace HW_ProfileBook.Services.Validators
 
         public static bool LoginValid(string login)
         {
-            return !(char.IsDigit(login, 0));
+            if (char.IsDigit(login, 0))
+            {
+                GetError = GetErrorText(EntryErrors.LoginStartsWithNumbers);
+                return false;
+            }
+            if (login.Length < 4 || login.Length > 16)
+            {
+                GetError = GetErrorText(EntryErrors.LoginShortOrLoginLong);
+                return false;
+            }
+
+            return true; ;
         }
+
+        #region --- Private Helpers ---
+
+        private static string GetErrorText(EntryErrors entryErrors)
+        {
+            switch (entryErrors)
+            {
+                case EntryErrors.LoginShortOrLoginLong:
+                    { return Resource.Resource.Login_must_be_at_least_4_and_no_more_than_16_characters_; }
+
+                case EntryErrors.LoginStartsWithNumbers:
+                    { return Resource.Resource.Login_should_not_start_with_numbers_; }
+
+                case EntryErrors.PasswordDoesNotMatch:
+                    { return  Resource.Resource.The_values_in_the_password_and_confirm_password_fields_must_match_; }
+
+                case EntryErrors.PasswordNotValid:
+                    { return Resource.Resource.Password_must_contain_at_least_one_uppercase_letter__one_lowercase_letter_and_one_number_; }
+
+                default: { return string.Empty; }
+            }
+        }
+
+        #endregion
     }
 }

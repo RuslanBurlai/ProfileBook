@@ -6,13 +6,9 @@ namespace HW_ProfileBook.Enums
 {
     public enum EntryErrors
     {
-        LoginShort,
-        LoginLong,
-        PasswordShort,
-        PasswordLong,
-        PasswordЬismatch,
-        LoginAlreadyTaken,
+        LoginShortOrLoginLong,
+        PasswordDoesNotMatch,
         LoginStartsWithNumbers,
-        PasswordNotValid
+        PasswordNotValid,
     }
 }

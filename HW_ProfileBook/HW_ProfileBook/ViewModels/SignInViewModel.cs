@@ -77,7 +77,7 @@ namespace HW_ProfileBook.ViewModels
             }
             else
             {
-                await _dialogService.DisplayAlertAsync("Error", "Invalid login or password!", "OK");
+                await _dialogService.DisplayAlertAsync(Resource.Resource.Error, Resource.Resource.Invalid_login_or_password_, "OK");
                 UserPassword = EntryHelper.ResetEntry();
             }
         }

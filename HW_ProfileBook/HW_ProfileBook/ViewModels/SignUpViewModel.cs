@@ -91,17 +91,17 @@ namespace HW_ProfileBook.ViewModels
                     }
                     else
                     {
-                        await _pageDialogService.DisplayAlertAsync("Login error", "This login already taken.", "ok");
+                        await _pageDialogService.DisplayAlertAsync(Resource.Resource.Error, Resource.Resource.This_login_already_taken_, "OK");
                     }
                 }
                 else
                 {
-                    await _pageDialogService.DisplayAlertAsync("Password is not valid", Validator.GetError, "ok");
+                    await _pageDialogService.DisplayAlertAsync(Resource.Resource.Error, Validator.GetError, "OK");
                 }
             }
             else
             {
-                await _pageDialogService.DisplayAlertAsync("Login is not valid", "Login should not start with numbers.", "ok");
+                await _pageDialogService.DisplayAlertAsync(Resource.Resource.Error, Validator.GetError, "OK");
             }
         }
 

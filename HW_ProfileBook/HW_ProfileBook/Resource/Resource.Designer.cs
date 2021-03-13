@@ -133,6 +133,24 @@ namespace HW_ProfileBook.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid login or password!.
+        /// </summary>
+        internal static string Invalid_login_or_password_ {
+            get {
+                return ResourceManager.GetString("Invalid login or password!", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         internal static string Language {
@@ -147,6 +165,24 @@ namespace HW_ProfileBook.Resource {
         internal static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login must be at least 4 and no more than 16 characters..
+        /// </summary>
+        internal static string Login_must_be_at_least_4_and_no_more_than_16_characters_ {
+            get {
+                return ResourceManager.GetString("Login must be at least 4 and no more than 16 characters.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login should not start with numbers..
+        /// </summary>
+        internal static string Login_should_not_start_with_numbers_ {
+            get {
+                return ResourceManager.GetString("Login should not start with numbers.", resourceCulture);
             }
         }
         
@@ -183,6 +219,16 @@ namespace HW_ProfileBook.Resource {
         internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must contain at least one uppercase letter, one lowercase letter and one number..
+        /// </summary>
+        internal static string Password_must_contain_at_least_one_uppercase_letter__one_lowercase_letter_and_one_number_ {
+            get {
+                return ResourceManager.GetString("Password must contain at least one uppercase letter, one lowercase letter and one" +
+                        " number.", resourceCulture);
             }
         }
         
@@ -250,11 +296,29 @@ namespace HW_ProfileBook.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The values in the password and confirm password fields must match..
+        /// </summary>
+        internal static string The_values_in_the_password_and_confirm_password_fields_must_match_ {
+            get {
+                return ResourceManager.GetString("The values in the password and confirm password fields must match.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Theme.
         /// </summary>
         internal static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This login already taken..
+        /// </summary>
+        internal static string This_login_already_taken_ {
+            get {
+                return ResourceManager.GetString("This login already taken.", resourceCulture);
             }
         }
         
