@@ -77,7 +77,7 @@
                             Binding="{Binding Source={x:Reference ruLang}, Path=IsChecked}"
                             TargetType="CheckBox"
                             Value="true">
-                            <Setter Property="IsChecked" Value="False" />
+                            <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
                     </CheckBox.Triggers>
                 </CheckBox>
@@ -97,7 +97,7 @@
                             Binding="{Binding Source={x:Reference enLang}, Path=IsChecked}"
                             TargetType="CheckBox"
                             Value="true">
-                            <Setter Property="IsChecked" Value="false" />
+                            <Setter Property="IsEnabled" Value="false" />
                         </DataTrigger>
                     </CheckBox.Triggers>
                 </CheckBox>

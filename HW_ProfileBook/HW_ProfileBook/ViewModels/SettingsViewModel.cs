@@ -65,7 +65,6 @@ namespace HW_ProfileBook.ViewModels
             set { SetProperty(ref _isDarkTheme, value); }
         }
 
-
         private bool _isRuLanguageName;
         public bool IsRuLanguage
         {
