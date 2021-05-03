@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="HW_ProfileBook.Views.Settings"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:resource="clr-namespace:HW_ProfileBook.Resource"
+    Title="{x:Static resource:Resource.Settings}"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource WindowBackgroundColor}">
+
+    <StackLayout>
+        <Frame BackgroundColor="{DynamicResource FrameBackgroundColor}" BorderColor="{DynamicResource FrameBorderColor}">
+            <Grid RadioButtonGroup.GroupName="Sort" RadioButtonGroup.SelectedValue="{Binding SelectedValue}">
+                <Label
+                    Grid.Row="0"
+                    FontSize="Large"
+                    HorizontalOptions="Start"
+                    Text="{x:Static resource:Resource.Sort_by}"
+                    VerticalOptions="Center" />
+
+                <RadioButton
+                    Grid.Row="1"
+                    Content="{x:Static resource:Resource.Name}"
+                    IsChecked="{Binding IsSortByName}"
+                    Value="Name" />
+                <RadioButton
+                    Grid.Row="2"
+                    Content="{x:Static resource:Resource.Nick_name}"
+                    IsChecked="{Binding IsSortByNickName}"
+                    Value="NickName" />
+                <RadioButton
+                    Grid.Row="3"
+                    Content="{x:Static resource:Resource.Date}"
+                    IsChecked="{Binding IsSortByDate}"
+                    Value="Date" />
+            </Grid>
+        </Frame>
+
+        <Frame BackgroundColor="{DynamicResource FrameBackgroundColor}" BorderColor="{DynamicResource FrameBorderColor}">
+            <Grid ColumnDefinitions="0.5*, *">
+
+                <Label
+                    Grid.ColumnSpan="2"
+                    FontSize="Large"
+                    Text="{x:Static resource:Resource.Theme}" />
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    FontSize="Medium"
+                    Text="{x:Static resource:Resource.Dark_theme}" />
+                <Switch
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    IsToggled="{Binding IsDarkTheme}" />
+            </Grid>
+        </Frame>
+
+        <Frame BackgroundColor="{DynamicResource FrameBackgroundColor}" BorderColor="{DynamicResource FrameBorderColor}">
+
+            <Grid ColumnDefinitions="0.1*, *">
+
+                <Label
+                    Grid.ColumnSpan="2"
+                    FontSize="Large"
+                    Text="{x:Static resource:Resource.Language}"
+                    VerticalOptions="Center" />
+
+                <CheckBox
+                    x:Name="enLang"
+                    Grid.Row="1"
+                    IsChecked="{Binding IsEnLanguage}">
+                    <CheckBox.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference ruLang}, Path=IsChecked}"
+                            TargetType="CheckBox"
+                            Value="true">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </CheckBox.Triggers>
+                </CheckBox>
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{x:Static resource:Resource.English}"
+                    VerticalOptions="Center" />
+
+                <CheckBox
+                    x:Name="ruLang"
+                    Grid.Row="2"
+                    IsChecked="{Binding IsRuLanguage}">
+                    <CheckBox.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={x:Reference enLang}, Path=IsChecked}"
+                            TargetType="CheckBox"
+                            Value="true">
+                            <Setter Property="IsEnabled" Value="false" />
+                        </DataTrigger>
+                    </CheckBox.Triggers>
+                </CheckBox>
+
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{x:Static resource:Resource.Russian}"
+                    VerticalOptions="Center" />
+
+            </Grid>
+        </Frame>
+    </StackLayout>
+</ContentPage>

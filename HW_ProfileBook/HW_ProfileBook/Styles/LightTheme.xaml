@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="HW_ProfileBook.Styles.LightTheme"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="PrimaryColor">#547799</Color>
+    <Color x:Key="PrimaryDarkColor">#172839</Color>
+
+    <Color x:Key="WindowBackgroundColor">#F5F5F5</Color>
+    <Color x:Key="WindowForegroundColor">#1E2222</Color>
+
+    <!--  Entry  -->
+    <Color x:Key="EntryBackgroundColor">#FFFFFF</Color>
+    <Color x:Key="EntryTextColor">#8E8E93</Color>
+
+    <!--  Frame  -->
+    <Color x:Key="FrameBackgroundColor">#FFFFFF</Color>
+    <Color x:Key="FrameBorderColor">Default</Color>
+
+</ResourceDictionary>

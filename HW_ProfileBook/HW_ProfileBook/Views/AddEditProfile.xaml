@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="HW_ProfileBook.Views.AddEditProfile"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:resource="clr-namespace:HW_ProfileBook.Resource"
+    Title="{x:Static resource:Resource.Add_Profile}"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource WindowBackgroundColor}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding SaveProfile}"
+            IconImageSource="ic_save.png"
+            Order="Primary" />
+    </ContentPage.ToolbarItems>
+
+    <Grid Margin="35,10,35,35" RowDefinitions="*, 0.5*, 0.5*, *">
+
+        <Image Grid.Row="0" Source="{Binding ProfileImage}">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ChangeImage}" />
+            </Image.GestureRecognizers>
+        </Image>
+
+        <Entry
+            Grid.Row="1"
+            Placeholder="{x:Static resource:Resource.Nick_name}"
+            Text="{Binding NickName}"
+            VerticalOptions="End" />
+        <Entry
+            Grid.Row="2"
+            Placeholder="{x:Static resource:Resource.Name}"
+            Text="{Binding Name}"
+            VerticalOptions="Center" />
+
+
+        <Editor
+            Grid.Row="3"
+            BackgroundColor="LightGray"
+            Placeholder="{x:Static resource:Resource.Description}"
+            Text="{Binding Description}" />
+    </Grid>
+</ContentPage>
